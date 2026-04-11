@@ -1,0 +1,13 @@
+{
+	"name": "@epoch-labs/generator",
+	"type": "module",
+	"scripts": {
+		"generate": "ts-node src/index.ts"
+	},
+	"devDependencies": {
+		"@types/node": "^25.6.0",
+		"ts-node": "^10.9.2",
+		"tsx": "^4.21.0",
+		"typescript": "^6.0.2"
+	}
+}

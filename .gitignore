@@ -23,16 +23,29 @@ coverage
 
 # Build Outputs
 .next/
+.nitro
+.tanstack
+.wrangler
+.output
+.vinxi
 out/
 build
 dist
-
+dist-ssr
 
 # Debug
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # Misc
 .DS_Store
+
+# Others
 *.pem
+__unconfig*
+todos.json

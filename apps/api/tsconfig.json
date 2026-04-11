@@ -1,0 +1,8 @@
+{
+	"extends": "../../packages/typescript-config/hono.json",
+	"compilerOptions": {
+		"rootDir": ".",
+		"outDir": "./dist"
+	},
+	"exclude": ["node_modules"]
+}
