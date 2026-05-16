@@ -1,7 +1,10 @@
 {
 	"extends": "@epoch-labs/typescript-config/base.json",
 	"compilerOptions": {
-		"rootDir": "."
+		"rootDir": ".",
+		"paths": {
+			"@db/*": ["./src/*"]
+		}
 	},
 	"exclude": ["node_modules"]
 }
