@@ -1,5 +1,10 @@
 {
 	"extends": "@epoch-labs/typescript-config/base.json",
+	"compilerOptions": {
+		"paths": {
+			"@ai/*": ["./src/*"]
+		}
+	},
 	"include": ["**/*.ts", "**/*.tsx"],
 	"exclude": ["dist", "build", "node_modules"]
 }

@@ -2,14 +2,17 @@
 	"name": "@epoch-labs/db",
 	"version": "0.0.0",
 	"private": true,
+	"exports": {
+		".": "./src/index.ts"
+	},
 	"scripts": {
 		"push": "drizzle-kit push",
 		"studio": "drizzle-kit studio",
 		"generate": "drizzle-kit generate --schema ./src/schema.ts --dialect postgresql --out ./drizzle",
 		"migrate": "drizzle-kit generate --schema ./src/schema.ts --dialect postgresql --out ./drizzle",
-		"seed:categories": "tsx scripts/seed-categories.ts",
-		"seed:products": "tsx scripts/seed-products.ts",
-		"seed:variants": "tsx scripts/seed-product-variants.ts"
+		"seed:categories": "tsx src/scripts/seed-categories.ts",
+		"seed:products": "tsx src/scripts/seed-products.ts",
+		"seed:variants": "tsx src/scripts/seed-product-variants.ts"
 	},
 	"devDependencies": {
 		"@epoch-labs/typescript-config": "workspace:*",

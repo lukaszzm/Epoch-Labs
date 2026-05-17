@@ -1,4 +1,3 @@
-import { products } from "@db/tables/products";
 import {
 	boolean,
 	index,
@@ -8,6 +7,7 @@ import {
 	timestamp,
 	uniqueIndex,
 } from "drizzle-orm/pg-core";
+import { products } from "./products";
 
 /**
  * A single purchasable SKU of a product.

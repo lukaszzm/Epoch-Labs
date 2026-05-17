@@ -1,5 +1,5 @@
-import { db } from "@db/db";
-import { type ProductVariantDraft, productVariants } from "@db/schema";
+import { db } from "../db";
+import { type ProductVariantDraft, productVariants } from "../schema";
 
 const VARIANTS: ProductVariantDraft[] = [
 	{

@@ -1,5 +1,3 @@
-import { carts } from "@db/tables/carts";
-import { users } from "@db/tables/users";
 import {
 	index,
 	integer,
@@ -9,6 +7,8 @@ import {
 	text,
 	timestamp,
 } from "drizzle-orm/pg-core";
+import { carts } from "./carts";
+import { users } from "./users";
 
 /**
  * Lifecycle state of an order:

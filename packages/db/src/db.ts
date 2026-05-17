@@ -1,8 +1,11 @@
 import "dotenv/config";
 
-import { getEnvVariable } from "@db/utils/get-env-variable";
 import { drizzle } from "drizzle-orm/node-postgres";
 
-const DATABASE_URL = getEnvVariable("DATABASE_URL");
+const DATABASE_URL = process.env.DATABASE_URL;
+
+if (!DATABASE_URL) {
+	throw new Error("DATABASE_URL environment variable is not set.");
+}
 
 export const db = drizzle(DATABASE_URL);

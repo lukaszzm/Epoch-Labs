@@ -1,4 +1,3 @@
-import { categories } from "@db/tables/categories";
 import {
 	boolean,
 	index,
@@ -12,6 +11,7 @@ import {
 	uniqueIndex,
 	vector,
 } from "drizzle-orm/pg-core";
+import { categories } from "./categories";
 
 /**
  * Lifecycle state of a product.
@@ -167,14 +167,13 @@ export const products = pgTable(
 		 */
 		agentSummary: text("agent_summary").notNull().default(""),
 
-		// TODO: Add a pgvector column for semantic product matching and filtering
 		/**
-		 * 1 536-dimension embedding of: name + brand + shortDescription + agentSummary
-		 * + serialized attributes.
+		 * 1 536-dimension Gemini embedding-001 vector (MRL-truncated from 3072).
+		 * Encodes: name + brand + shortDescription + agentSummary + serialized attributes.
 		 * Enables vector similarity search across the product catalog.
-		 *
-		 * Add via raw SQL migration (requires pgvector extension):
-		 *   ALTER TABLE products ADD COLUMN embedding vector(1536);
+		 * Index with taskType: "RETRIEVAL_DOCUMENT"; query with taskType: "RETRIEVAL_QUERY".
+		 * outputDimensionality: 1536 is used at embed time — stays within the
+		 * pgvector HNSW 2000-dimension limit while preserving quality via MRL.
 		 */
 		embedding: vector("embedding", { dimensions: 1536 }),
 

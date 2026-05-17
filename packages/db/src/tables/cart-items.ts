@@ -1,5 +1,3 @@
-import { carts } from "@db/tables/carts";
-import { productVariants } from "@db/tables/product-variants";
 import {
 	index,
 	integer,
@@ -8,6 +6,8 @@ import {
 	timestamp,
 	uniqueIndex,
 } from "drizzle-orm/pg-core";
+import { carts } from "./carts";
+import { productVariants } from "./product-variants";
 
 /**
  * A single line item in a shopping cart.

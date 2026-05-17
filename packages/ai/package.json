@@ -1,0 +1,23 @@
+{
+	"name": "@epoch-labs/ai",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"embed:products": "tsx src/scripts/embed-products.ts",
+		"embed:categories": "tsx src/scripts/embed-categories.ts"
+	},
+	"dependencies": {
+		"@epoch-labs/db": "workspace:*",
+		"@ai-sdk/google": "^3.0.75",
+		"ai": "^6.0.184",
+		"dotenv": "^17.4.2",
+		"drizzle-orm": "^0.45.2",
+		"zod": "^4.4.3"
+	},
+	"devDependencies": {
+		"@epoch-labs/typescript-config": "workspace:*",
+		"@types/node": "^25.6.0",
+		"tsx": "^4.21.0",
+		"typescript": "^6.0.2"
+	}
+}

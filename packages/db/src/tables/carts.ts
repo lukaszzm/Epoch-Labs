@@ -1,5 +1,5 @@
-import { users } from "@db/tables/users";
 import { index, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { users } from "./users";
 
 /**
  * Lifecycle state of a cart.

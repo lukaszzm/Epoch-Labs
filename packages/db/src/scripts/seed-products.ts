@@ -1,5 +1,5 @@
-import { db } from "@db/db";
-import { type ProductDraft, type ProductImage, products } from "@db/schema";
+import { db } from "../db";
+import { type ProductDraft, type ProductImage, products } from "../schema";
 
 function img(text: string): ProductImage[] {
 	return [

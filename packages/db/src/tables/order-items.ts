@@ -1,6 +1,6 @@
-import { orders } from "@db/tables/orders";
-import { productVariants } from "@db/tables/product-variants";
 import { index, integer, jsonb, pgTable, text } from "drizzle-orm/pg-core";
+import { orders } from "./orders";
+import { productVariants } from "./product-variants";
 
 /**
  * Point-in-time snapshot of a variant and its parent product,

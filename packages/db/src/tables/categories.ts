@@ -269,25 +269,18 @@ export const categories = pgTable(
 			.default([]),
 
 		/**
-		 * 1 536-dimension OpenAI / pgvector embedding of:
-		 *   name + description + agentHints.synonyms + agentHints.intents
-		 * Enables semantic category matching from free-form natural language queries.
+		 * 1 536-dimension Gemini embedding-001 vector (MRL-truncated from 3072).
+		 * Encodes: name + description + agentHints.synonyms + agentHints.intents.
+		 * Enables semantic category routing from free-form natural language queries.
 		 * Regenerate whenever name, description, or agentHints changes.
+		 * Index with taskType: "RETRIEVAL_DOCUMENT"; query with taskType: "RETRIEVAL_QUERY".
+		 * outputDimensionality: 1536 is used at embed time — stays within the
+		 * pgvector HNSW 2000-dimension limit while preserving quality via MRL.
 		 *
 		 * Query pattern:
 		 *   SELECT * FROM categories
 		 *   ORDER BY embedding <=> $queryVector
 		 *   LIMIT 5;
-		 *
-		 * Requires the pgvector extension:
-		 *   CREATE EXTENSION IF NOT EXISTS vector;
-		 *
-		 * Column definition (add via raw SQL migration until Drizzle ships
-		 * first-class pgvector support):
-		 *   ALTER TABLE categories ADD COLUMN embedding vector(1536);
-		 *
-		 * Kept as text here as a typed placeholder; swap for the pgvector
-		 * column type once your Drizzle version supports it.
 		 */
 		embedding: vector("embedding", { dimensions: 1536 }),
 
