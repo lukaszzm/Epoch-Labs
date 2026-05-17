@@ -1,6 +1,13 @@
-
 import { products } from "@db/tables/products";
-import { pgTable, text, boolean, integer, timestamp, uniqueIndex, index, real } from "drizzle-orm/pg-core";
+import {
+	boolean,
+	index,
+	integer,
+	pgTable,
+	text,
+	timestamp,
+	uniqueIndex,
+} from "drizzle-orm/pg-core";
 
 /**
  * A single purchasable SKU of a product.

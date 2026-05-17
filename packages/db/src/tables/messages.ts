@@ -1,11 +1,5 @@
 import { conversations } from "@db/tables/conversations";
-import {
-	index,
-	pgEnum,
-	pgTable,
-	text,
-	timestamp,
-} from "drizzle-orm/pg-core";
+import { index, pgEnum, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 /**
  * Role of a message participant:

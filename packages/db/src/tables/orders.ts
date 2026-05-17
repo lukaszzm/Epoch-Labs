@@ -38,44 +38,44 @@ export type OrderStatus = (typeof orderStatus.enumValues)[number];
  * if the customer later changes their address.
  */
 export type ShippingAddress = {
-    /**
-     * Full name of the recipient, for shipping labels and delivery instructions.
-     */
+	/**
+	 * Full name of the recipient, for shipping labels and delivery instructions.
+	 */
 	fullName: string;
 
-    /**
-     * Primary address line, e.g. street and number.
-     */
+	/**
+	 * Primary address line, e.g. street and number.
+	 */
 	line1: string;
 
-    /**
-     * Secondary address line, e.g. apartment or suite number. Optional.
-     */
+	/**
+	 * Secondary address line, e.g. apartment or suite number. Optional.
+	 */
 	line2?: string;
 
-    /**
-     * City or locality.
-     */
+	/**
+	 * City or locality.
+	 */
 	city: string;
 
-    /**
-     * State, province, or region. Optional.
-     */
+	/**
+	 * State, province, or region. Optional.
+	 */
 	state?: string;
 
-    /**
-     * Postal or ZIP code.
-     */
+	/**
+	 * Postal or ZIP code.
+	 */
 	postalCode: string;
 
-	/** 
-     * ISO 3166-1 alpha-2 country code (e.g. "PL", "DE").
-     */
+	/**
+	 * ISO 3166-1 alpha-2 country code (e.g. "PL", "DE").
+	 */
 	country: string;
 
-    /**
-     * Phone number for delivery issues or SMS updates. Optional.
-     */
+	/**
+	 * Phone number for delivery issues or SMS updates. Optional.
+	 */
 	phone?: string;
 };
 

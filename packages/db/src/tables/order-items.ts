@@ -1,12 +1,6 @@
 import { orders } from "@db/tables/orders";
 import { productVariants } from "@db/tables/product-variants";
-import {
-	index,
-	integer,
-	jsonb,
-	pgTable,
-	text,
-} from "drizzle-orm/pg-core";
+import { index, integer, jsonb, pgTable, text } from "drizzle-orm/pg-core";
 
 /**
  * Point-in-time snapshot of a variant and its parent product,
@@ -14,29 +8,29 @@ import {
  * Ensures order history remains accurate even after catalog edits.
  */
 export type VariantSnapshot = {
-    /**
-     * The specific SKU (size / variant) the customer selected.
-     */
+	/**
+	 * The specific SKU (size / variant) the customer selected.
+	 */
 	sku: string;
 
-	/** 
-     * Variant label shown in size selectors (e.g. "50ml"). 
-     */
+	/**
+	 * Variant label shown in size selectors (e.g. "50ml").
+	 */
 	name: string;
 
-    /**
-     * Product name at purchase time, copied from the parent product for easy access.
-     */
+	/**
+	 * Product name at purchase time, copied from the parent product for easy access.
+	 */
 	productName: string;
 
-    /**
-     * Brand name at purchase time, copied from the parent product for easy access.
-     */
+	/**
+	 * Brand name at purchase time, copied from the parent product for easy access.
+	 */
 	brand: string;
 
-	/** 
-     * Primary image URL at purchase time. 
-     */
+	/**
+	 * Primary image URL at purchase time.
+	 */
 	imageUrl?: string;
 };
 

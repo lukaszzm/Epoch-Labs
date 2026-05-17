@@ -1,10 +1,10 @@
-export { categories } from "@db/tables/categories";
-export { products, productStatus } from "@db/tables/products";
-export { productVariants } from "@db/tables/product-variants";
-export { users } from "@db/tables/users";
-export { carts, cartStatus } from "@db/tables/carts";
 export { cartItems } from "@db/tables/cart-items";
-export { orders, orderStatus } from "@db/tables/orders";
-export { orderItems } from "@db/tables/order-items";
+export { cartStatus, carts } from "@db/tables/carts";
+export { categories } from "@db/tables/categories";
 export { conversations } from "@db/tables/conversations";
-export { messages, messageRole } from "@db/tables/messages";
+export { messageRole, messages } from "@db/tables/messages";
+export { orderItems } from "@db/tables/order-items";
+export { orderStatus, orders } from "@db/tables/orders";
+export { productVariants } from "@db/tables/product-variants";
+export { productStatus, products } from "@db/tables/products";
+export { users } from "@db/tables/users";

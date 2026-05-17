@@ -1,5 +1,17 @@
 import { categories } from "@db/tables/categories";
-import { pgEnum, pgTable, jsonb, text, boolean, integer, timestamp, uniqueIndex, index, real } from "drizzle-orm/pg-core";
+import {
+	boolean,
+	index,
+	integer,
+	jsonb,
+	pgEnum,
+	pgTable,
+	real,
+	text,
+	timestamp,
+	uniqueIndex,
+	vector,
+} from "drizzle-orm/pg-core";
 
 /**
  * Lifecycle state of a product.
@@ -164,7 +176,7 @@ export const products = pgTable(
 		 * Add via raw SQL migration (requires pgvector extension):
 		 *   ALTER TABLE products ADD COLUMN embedding vector(1536);
 		 */
-		// embedding: vector("embedding", { dimensions: 1536 }),
+		embedding: vector("embedding", { dimensions: 1536 }),
 
 		/**
 		 * SEO title for this product, shown in agent responses and used as the title tag for SEO purposes. Keep under 60 characters.
@@ -235,6 +247,14 @@ export const products = pgTable(
 		 * Featured product slots.
 		 */
 		index("products_featured_idx").on(t.isFeatured, t.status),
+
+		/**
+		 * Vector similarity index on the embedding column for semantic search and matching.
+		 */
+		index("products_embedding_idx").using(
+			"hnsw",
+			t.embedding.op("vector_cosine_ops"),
+		),
 	],
 );
 

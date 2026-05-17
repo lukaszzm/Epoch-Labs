@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <any is allowed for database table schemas> */
 import {
 	boolean,
 	index,
@@ -7,6 +8,7 @@ import {
 	text,
 	timestamp,
 	uniqueIndex,
+	vector,
 } from "drizzle-orm/pg-core";
 
 /**
@@ -266,7 +268,6 @@ export const categories = pgTable(
 			.notNull()
 			.default([]),
 
-		// TODO: Add a pgvector column for semantic category matching.
 		/**
 		 * 1 536-dimension OpenAI / pgvector embedding of:
 		 *   name + description + agentHints.synonyms + agentHints.intents
@@ -288,7 +289,7 @@ export const categories = pgTable(
 		 * Kept as text here as a typed placeholder; swap for the pgvector
 		 * column type once your Drizzle version supports it.
 		 */
-		// embedding: vector("embedding", { dimensions: 1536 }),
+		embedding: vector("embedding", { dimensions: 1536 }),
 
 		/**
 		 * Timestamp of category creation. Immutable. Used for agent context and sorting.
@@ -331,6 +332,14 @@ export const categories = pgTable(
 		 *  Position-ordered listing within a parent
 		 */
 		index("categories_parent_position_idx").on(t.parentId, t.position),
+
+		/**
+		 * Semantic search index on the embedding column for agent routing.
+		 */
+		index("categories_embedding_idx").using(
+			"hnsw",
+			t.embedding.op("vector_cosine_ops"),
+		),
 	],
 );
 

@@ -61,10 +61,7 @@ export const cartItems = pgTable(
 		 * Each variant may appear at most once per cart.
 		 * Use UPDATE quantity rather than inserting a duplicate row.
 		 */
-		uniqueIndex("cart_items_cart_variant_idx").on(
-			t.cartId,
-			t.productVariantId,
-		),
+		uniqueIndex("cart_items_cart_variant_idx").on(t.cartId, t.productVariantId),
 
 		/**
 		 * Fetch all items in a cart.
