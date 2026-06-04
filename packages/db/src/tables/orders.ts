@@ -7,8 +7,7 @@ import {
 	text,
 	timestamp,
 } from "drizzle-orm/pg-core";
-import { carts } from "./carts";
-import { users } from "./users";
+import { carts, users } from "@/schema";
 
 /**
  * Lifecycle state of an order:

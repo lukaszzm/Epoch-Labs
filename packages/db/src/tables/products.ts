@@ -11,7 +11,7 @@ import {
 	uniqueIndex,
 	vector,
 } from "drizzle-orm/pg-core";
-import { categories } from "./categories";
+import { categories } from "@/schema";
 
 /**
  * Lifecycle state of a product.

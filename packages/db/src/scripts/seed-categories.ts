@@ -1,11 +1,11 @@
-import { db } from "../db";
+import { db } from "@/db";
 import {
 	type AgentHints,
 	type BreadcrumbItem,
 	type CategoryAttribute,
 	type CategoryDraft,
 	categories,
-} from "../schema";
+} from "@/schema";
 
 type SeedNode = Omit<
 	CategoryDraft,

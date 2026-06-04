@@ -6,8 +6,7 @@ import {
 	timestamp,
 	uniqueIndex,
 } from "drizzle-orm/pg-core";
-import { carts } from "./carts";
-import { productVariants } from "./product-variants";
+import { carts, productVariants } from "@/schema";
 
 /**
  * A single line item in a shopping cart.

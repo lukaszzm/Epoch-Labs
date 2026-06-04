@@ -7,7 +7,7 @@ import {
 	timestamp,
 	uniqueIndex,
 } from "drizzle-orm/pg-core";
-import { products } from "./products";
+import { products } from "@/schema";
 
 /**
  * A single purchasable SKU of a product.

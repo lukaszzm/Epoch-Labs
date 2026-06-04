@@ -7,8 +7,12 @@
 		"start": "node dist/index.js"
 	},
 	"dependencies": {
+		"@epoch-labs/db": "workspace:*",
 		"@hono/node-server": "^1.19.13",
-		"hono": "^4.12.12"
+		"@hono/zod-validator": "^0.4.3",
+		"drizzle-orm": "^0.45.2",
+		"hono": "^4.12.12",
+		"zod": "^3.25.76"
 	},
 	"devDependencies": {
 		"@epoch-labs/typescript-config": "workspace:*",

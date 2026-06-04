@@ -1,5 +1,5 @@
 import { index, pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { users } from "./users";
+import { users } from "@/schema";
 
 /**
  * A single agent chat session.
