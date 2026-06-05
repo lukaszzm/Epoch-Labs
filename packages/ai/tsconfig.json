@@ -1,6 +1,8 @@
 {
 	"extends": "@epoch-labs/typescript-config/base.json",
 	"compilerOptions": {
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
 		"paths": {
 			"@ai/*": ["./src/*"]
 		}

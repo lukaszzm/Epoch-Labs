@@ -40,12 +40,7 @@ export async function embedProducts(): Promise<{ updated: number }> {
 		});
 
 		await Promise.all(
-			batch.map((row, idx) =>
-				db
-					.update(products)
-					.set({ embedding: embeddings[idx] })
-					.where(eq(products.id, row.id)),
-			),
+			batch.map((row, idx) => db.update(products).set({ embedding: embeddings[idx] }).where(eq(products.id, row.id))),
 		);
 
 		updated += batch.length;

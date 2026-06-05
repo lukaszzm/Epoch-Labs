@@ -38,10 +38,7 @@ export async function embedCategories(): Promise<{ updated: number }> {
 
 		await Promise.all(
 			batch.map((row, idx) =>
-				db
-					.update(categories)
-					.set({ embedding: embeddings[idx] })
-					.where(eq(categories.id, row.id)),
+				db.update(categories).set({ embedding: embeddings[idx] }).where(eq(categories.id, row.id)),
 			),
 		);
 
