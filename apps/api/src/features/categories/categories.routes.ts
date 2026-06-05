@@ -49,10 +49,7 @@ app.get("/*", async (c) => {
 		return c.json({ error: "Category not found" }, 404);
 	}
 
-	const [children, products] = await Promise.all([
-		getCategoryChildren(category.id),
-		getCategoryProducts(category.id),
-	]);
+	const [children, products] = await Promise.all([getCategoryChildren(category.id), getCategoryProducts(category.id)]);
 
 	return c.json({ data: { ...category, children, products } });
 });

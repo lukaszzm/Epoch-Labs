@@ -1,9 +1,4 @@
-import {
-	db,
-	type ProductAttributeValues,
-	products,
-	productVariants,
-} from "@epoch-labs/db";
+import { db, type ProductAttributeValues, products, productVariants } from "@epoch-labs/db";
 import { and, count, eq, gte, ilike, lte, sql } from "drizzle-orm";
 
 export type ProductFilters = {
@@ -16,24 +11,16 @@ export type ProductFilters = {
 	limit: number;
 };
 
-/**
- * Paginated list of active + indexed products with optional filters.
- */
 export async function listProducts(filters: ProductFilters) {
-	const { category, brand, priceMin, priceMax, attributes, page, limit } =
-		filters;
+	const { category, brand, priceMin, priceMax, attributes, page, limit } = filters;
 
 	const where = and(
 		eq(products.status, "active"),
 		eq(products.isIndexed, true),
 		category ? eq(products.categoryId, category) : undefined,
 		brand ? ilike(products.brand, brand) : undefined,
-		priceMin !== undefined
-			? gte(products.lowestPriceInCents, priceMin)
-			: undefined,
-		priceMax !== undefined
-			? lte(products.lowestPriceInCents, priceMax)
-			: undefined,
+		priceMin !== undefined ? gte(products.lowestPriceInCents, priceMin) : undefined,
+		priceMax !== undefined ? lte(products.lowestPriceInCents, priceMax) : undefined,
 		attributes && Object.keys(attributes).length > 0
 			? sql`${products.attributes} @> ${JSON.stringify(attributes)}::jsonb`
 			: undefined,
@@ -82,15 +69,8 @@ export async function listProducts(filters: ProductFilters) {
 	};
 }
 
-/**
- * Full product detail by slug, including all variants.
- */
 export async function getProductBySlug(slug: string) {
-	const [product] = await db
-		.select()
-		.from(products)
-		.where(eq(products.slug, slug))
-		.limit(1);
+	const [product] = await db.select().from(products).where(eq(products.slug, slug)).limit(1);
 
 	if (!product) return null;
 

@@ -1,9 +1,6 @@
 import { z } from "zod";
 
-type ProductAttributeValues = Record<
-	string,
-	string | number | boolean | string[]
->;
+type ProductAttributeValues = Record<string, string | number | boolean | string[]>;
 
 const positiveInt = z.coerce.number().int().positive();
 

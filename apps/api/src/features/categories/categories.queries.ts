@@ -6,11 +6,7 @@ export async function listCategories() {
 }
 
 export async function getCategoryByPath(path: string) {
-	const [row] = await db
-		.select()
-		.from(categories)
-		.where(eq(categories.path, path))
-		.limit(1);
+	const [row] = await db.select().from(categories).where(eq(categories.path, path)).limit(1);
 	return row ?? null;
 }
 
@@ -29,9 +25,7 @@ export async function getCategoryChildren(parentId: string) {
 			iconUrl: categories.iconUrl,
 		})
 		.from(categories)
-		.where(
-			and(eq(categories.parentId, parentId), eq(categories.isActive, true)),
-		)
+		.where(and(eq(categories.parentId, parentId), eq(categories.isActive, true)))
 		.orderBy(categories.position);
 }
 
@@ -53,12 +47,6 @@ export async function getCategoryProducts(categoryId: string) {
 			position: products.position,
 		})
 		.from(products)
-		.where(
-			and(
-				eq(products.categoryId, categoryId),
-				eq(products.status, "active"),
-				eq(products.isIndexed, true),
-			),
-		)
+		.where(and(eq(products.categoryId, categoryId), eq(products.status, "active"), eq(products.isIndexed, true)))
 		.orderBy(products.position);
 }

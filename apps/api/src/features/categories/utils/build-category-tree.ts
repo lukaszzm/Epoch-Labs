@@ -4,9 +4,7 @@ type CategoryRow = Awaited<ReturnType<typeof listCategories>>[number];
 
 export type CategoryNode = CategoryRow & { children: CategoryNode[] };
 
-export function buildCategoryTree(
-	rows: ReadonlyArray<CategoryRow>,
-): CategoryNode[] {
+export function buildCategoryTree(rows: ReadonlyArray<CategoryRow>): CategoryNode[] {
 	const map = new Map<string, CategoryNode>();
 	const roots: CategoryNode[] = [];
 

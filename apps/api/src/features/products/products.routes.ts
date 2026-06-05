@@ -1,9 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
-import {
-	getProductBySlug,
-	listProducts,
-} from "@/features/products/products.queries";
+import { getProductBySlug, listProducts } from "@/features/products/products.queries";
 import { productListQuerySchema } from "@/features/products/products.schemas";
 
 const app = new Hono();
@@ -21,8 +18,7 @@ const app = new Hono();
  *   attributes  — JSON-encoded attribute key/value pairs to match
  */
 app.get("/", zValidator("query", productListQuerySchema), async (c) => {
-	const { page, limit, category, brand, priceMin, priceMax, attributes } =
-		c.req.valid("query");
+	const { page, limit, category, brand, priceMin, priceMax, attributes } = c.req.valid("query");
 
 	const result = await listProducts({
 		page,
