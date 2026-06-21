@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { HttpStatusCode } from "@/config/http-status-code";
 import {
 	getCategoryByPath,
 	getCategoryChildren,
@@ -21,7 +22,7 @@ app.get("/", zValidator("query", categoryListQuerySchema), async (c) => {
 	const { tree } = c.req.valid("query");
 	const rows = await listCategories();
 	const data = tree ? buildCategoryTree(rows) : rows;
-	return c.json({ data });
+	return c.json({ data }, HttpStatusCode.OK);
 });
 
 /**
@@ -38,7 +39,7 @@ app.get("/*", async (c) => {
 	const wildcardParam = c.req.param("*");
 
 	if (!wildcardParam) {
-		return c.json({ error: "Category path is required" }, 400);
+		return c.json({ error: "Category path is required" }, HttpStatusCode.BAD_REQUEST);
 	}
 
 	const wildcard = wildcardParam.replace(/\/$/, "");
@@ -46,12 +47,12 @@ app.get("/*", async (c) => {
 
 	const category = await getCategoryByPath(path);
 	if (!category) {
-		return c.json({ error: "Category not found" }, 404);
+		return c.json({ error: "Category not found" }, HttpStatusCode.NOT_FOUND);
 	}
 
 	const [children, products] = await Promise.all([getCategoryChildren(category.id), getCategoryProducts(category.id)]);
 
-	return c.json({ data: { ...category, children, products } });
+	return c.json({ data: { ...category, children, products } }, HttpStatusCode.OK);
 });
 
 export default app;

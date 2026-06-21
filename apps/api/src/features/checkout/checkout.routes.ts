@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { HttpStatusCode } from "@/config/http-status-code";
 import { convertCartToOrder } from "@/features/checkout/checkout.queries";
 import { checkoutBodySchema } from "@/features/checkout/checkout.schemas";
 
@@ -19,14 +20,14 @@ app.post("/", zValidator("json", checkoutBodySchema), async (c) => {
 	const result = await convertCartToOrder(sessionId, shippingAddress, currency);
 
 	if (!result.cart) {
-		return c.json({ error: "Cart not found" }, 404);
+		return c.json({ error: "Cart not found" }, HttpStatusCode.NOT_FOUND);
 	}
 
 	if (!result.order) {
-		return c.json({ error: "Cart is empty" }, 422);
+		return c.json({ error: "Cart is empty" }, HttpStatusCode.UNPROCESSABLE_ENTITY);
 	}
 
-	return c.json({ data: result.order }, 201);
+	return c.json({ data: result.order }, HttpStatusCode.CREATED);
 });
 
 export default app;

@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { HttpStatusCode } from "@/config/http-status-code";
 import { getProductBySlug, listProducts } from "@/features/products/products.queries";
 import { productListQuerySchema } from "@/features/products/products.schemas";
 
@@ -30,7 +31,7 @@ app.get("/", zValidator("query", productListQuerySchema), async (c) => {
 		attributes,
 	});
 
-	return c.json(result);
+	return c.json(result, HttpStatusCode.OK);
 });
 
 /**
@@ -43,10 +44,10 @@ app.get("/:slug", async (c) => {
 	const product = await getProductBySlug(slug);
 
 	if (!product) {
-		return c.json({ error: "Product not found" }, 404);
+		return c.json({ error: "Product not found" }, HttpStatusCode.NOT_FOUND);
 	}
 
-	return c.json({ data: product });
+	return c.json({ data: product }, HttpStatusCode.OK);
 });
 
 export default app;

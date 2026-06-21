@@ -7,6 +7,7 @@
 		"start": "node dist/index.js"
 	},
 	"dependencies": {
+		"@epoch-labs/ai": "workspace:*",
 		"@epoch-labs/db": "workspace:*",
 		"@hono/node-server": "^1.19.13",
 		"@hono/zod-validator": "^0.4.3",

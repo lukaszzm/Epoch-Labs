@@ -1,6 +1,7 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
+import agentRoutes from "@/features/agent/agent.routes.js";
 import cartRoutes from "@/features/cart/cart.routes.js";
 import categoriesRoutes from "@/features/categories/categories.routes.js";
 import checkoutRoutes from "@/features/checkout/checkout.routes.js";
@@ -18,6 +19,7 @@ api.route("/categories", categoriesRoutes);
 api.route("/products", productsRoutes);
 api.route("/cart", cartRoutes);
 api.route("/checkout", checkoutRoutes);
+api.route("/agent", agentRoutes);
 
 serve(
 	{

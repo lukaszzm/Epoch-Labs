@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
+import { HttpStatusCode } from "@/config/http-status-code";
 import { createCart, getCartBySessionId, patchCartItems } from "@/features/cart/cart.queries";
 import { createCartBodySchema, patchCartItemsBodySchema } from "@/features/cart/cart.schemas";
 
@@ -13,7 +14,7 @@ const app = new Hono();
 app.post("/", zValidator("json", createCartBodySchema), async (c) => {
 	const { sessionId, userId } = c.req.valid("json");
 	const cart = await createCart(sessionId, userId);
-	return c.json({ data: cart }, 201);
+	return c.json({ data: cart }, HttpStatusCode.CREATED);
 });
 
 /**
@@ -26,10 +27,10 @@ app.get("/:sessionId", async (c) => {
 	const cart = await getCartBySessionId(sessionId);
 
 	if (!cart) {
-		return c.json({ error: "Cart not found" }, 404);
+		return c.json({ error: "Cart not found" }, HttpStatusCode.NOT_FOUND);
 	}
 
-	return c.json({ data: cart });
+	return c.json({ data: cart }, HttpStatusCode.OK);
 });
 
 /**
@@ -44,13 +45,13 @@ app.patch("/:sessionId/items", zValidator("json", patchCartItemsBodySchema), asy
 
 	const cart = await getCartBySessionId(sessionId);
 	if (!cart) {
-		return c.json({ error: "Cart not found" }, 404);
+		return c.json({ error: "Cart not found" }, HttpStatusCode.NOT_FOUND);
 	}
 
 	await patchCartItems(cart.id, items);
 
 	const updated = await getCartBySessionId(sessionId);
-	return c.json({ data: updated });
+	return c.json({ data: updated }, HttpStatusCode.OK);
 });
 
 export default app;
