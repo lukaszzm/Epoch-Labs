@@ -17,9 +17,10 @@ const app = new Hono();
  *   priceMin    — minimum price in cents (inclusive)
  *   priceMax    — maximum price in cents (inclusive)
  *   attributes  — JSON-encoded attribute key/value pairs to match
+ *   featured    — filter by featured products
  */
 app.get("/", zValidator("query", productListQuerySchema), async (c) => {
-	const { page, limit, category, brand, priceMin, priceMax, attributes } = c.req.valid("query");
+	const { page, limit, category, brand, priceMin, priceMax, attributes, featured } = c.req.valid("query");
 
 	const result = await listProducts({
 		page,
@@ -29,6 +30,7 @@ app.get("/", zValidator("query", productListQuerySchema), async (c) => {
 		priceMin,
 		priceMax,
 		attributes,
+		featured,
 	});
 
 	return c.json(result, HttpStatusCode.OK);

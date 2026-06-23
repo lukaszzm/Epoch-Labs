@@ -7,18 +7,20 @@ export type ProductFilters = {
 	priceMin?: number;
 	priceMax?: number;
 	attributes?: ProductAttributeValues;
+	featured?: boolean;
 	page: number;
 	limit: number;
 };
 
 export async function listProducts(filters: ProductFilters) {
-	const { category, brand, priceMin, priceMax, attributes, page, limit } = filters;
+	const { category, brand, priceMin, priceMax, attributes, featured, page, limit } = filters;
 
 	const where = and(
 		eq(products.status, "active"),
 		eq(products.isIndexed, true),
 		category ? eq(products.categoryId, category) : undefined,
 		brand ? ilike(products.brand, brand) : undefined,
+		featured !== undefined ? eq(products.isFeatured, featured) : undefined,
 		priceMin !== undefined ? gte(products.lowestPriceInCents, priceMin) : undefined,
 		priceMax !== undefined ? lte(products.lowestPriceInCents, priceMax) : undefined,
 		attributes && Object.keys(attributes).length > 0
@@ -59,7 +61,7 @@ export async function listProducts(filters: ProductFilters) {
 	const total = totals.at(0)?.total ?? 0;
 
 	return {
-		data: rows,
+		results: rows,
 		pagination: {
 			total,
 			page,
