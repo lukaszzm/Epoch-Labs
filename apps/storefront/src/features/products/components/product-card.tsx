@@ -1,17 +1,19 @@
 import { Link } from "@tanstack/react-router";
+import type { ProductProjection } from "@/features/products/schemas/product-projection-schema";
 import type { Product } from "@/features/products/schemas/product-schema";
 import { formatCurrency } from "@/utils/format-currency";
 import { ProductImage } from "./product-image";
 
-export interface ProductCardProps extends Product {}
+export interface ProductCardProps extends Product {
+	product: ProductProjection;
+}
 
-export function ProductCard({ slug: _, name, images, brand, lowestPriceInCents, currency }: ProductCardProps) {
+export function ProductCard({ slug, name, images, brand, lowestPriceInCents, currency }: ProductCardProps) {
 	const formattedPrice = formatCurrency(lowestPriceInCents, { currency });
 	const primaryImage = images?.find((image) => image.isPrimary) || images?.at(0);
 
-	// TODO: Add a link to the product detail page using the slug when the product card is clicked.
 	return (
-		<Link to="/" aria-label={name} className="group flex flex-col gap-3">
+		<Link to="/products/$slug" params={{ slug }} aria-label={name} className="group flex flex-col gap-3">
 			<div className="relative aspect-square overflow-hidden rounded-md bg-muted">
 				<ProductImage
 					src={primaryImage?.url ?? ""}

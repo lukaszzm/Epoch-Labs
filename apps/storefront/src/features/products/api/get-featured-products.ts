@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { ApiRoute } from "@/config/api-routes";
-import { productSchema } from "@/features/products/schemas/product-schema";
+import { productProjectionSchema } from "@/features/products/schemas/product-projection-schema";
 import { paginationSchema } from "@/schemas/pagination-schema";
 import { buildApiUrl } from "@/utils/build-api-url";
 
@@ -10,7 +10,7 @@ const getFeaturedProductsInputSchema = z.object({
 });
 
 const getFeaturedProductsOutputSchema = z.object({
-	results: z.array(productSchema),
+	results: z.array(productProjectionSchema),
 	pagination: paginationSchema,
 });
 

@@ -1,17 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Layout } from "@/components/layout";
+import { Fragment } from "react/jsx-runtime";
 import { CampaignBanner } from "@/features/marketing/components/campaign-banner";
 import { Hero } from "@/features/marketing/components/hero";
 import { FeaturedProducts } from "@/features/products/components/featured-products";
 
-export const Route = createFileRoute("/")({ component: App });
+export const Route = createFileRoute("/_storefront/")({
+	component: StorefrontPage,
+});
 
-function App() {
+function StorefrontPage() {
 	return (
-		<Layout>
+		<Fragment>
 			<Hero />
 			<FeaturedProducts />
 			<CampaignBanner />
-		</Layout>
+		</Fragment>
 	);
 }

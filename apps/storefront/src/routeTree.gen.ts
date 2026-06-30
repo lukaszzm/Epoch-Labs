@@ -9,12 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as StorefrontRouteRouteImport } from './routes/_storefront/route'
 import { Route as AgentIndexRouteImport } from './routes/agent/index'
+import { Route as StorefrontIndexRouteImport } from './routes/_storefront/index'
+import { Route as StorefrontProductsSlugRouteImport } from './routes/_storefront/products/$slug'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const StorefrontRouteRoute = StorefrontRouteRouteImport.update({
+  id: '/_storefront',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgentIndexRoute = AgentIndexRouteImport.update({
@@ -22,40 +23,59 @@ const AgentIndexRoute = AgentIndexRouteImport.update({
   path: '/agent/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StorefrontIndexRoute = StorefrontIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StorefrontRouteRoute,
+} as any)
+const StorefrontProductsSlugRoute = StorefrontProductsSlugRouteImport.update({
+  id: '/products/$slug',
+  path: '/products/$slug',
+  getParentRoute: () => StorefrontRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof StorefrontIndexRoute
   '/agent/': typeof AgentIndexRoute
+  '/products/$slug': typeof StorefrontProductsSlugRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/': typeof StorefrontIndexRoute
   '/agent': typeof AgentIndexRoute
+  '/products/$slug': typeof StorefrontProductsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_storefront': typeof StorefrontRouteRouteWithChildren
+  '/_storefront/': typeof StorefrontIndexRoute
   '/agent/': typeof AgentIndexRoute
+  '/_storefront/products/$slug': typeof StorefrontProductsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/agent/'
+  fullPaths: '/' | '/agent/' | '/products/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/agent'
-  id: '__root__' | '/' | '/agent/'
+  to: '/' | '/agent' | '/products/$slug'
+  id:
+    | '__root__'
+    | '/_storefront'
+    | '/_storefront/'
+    | '/agent/'
+    | '/_storefront/products/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  StorefrontRouteRoute: typeof StorefrontRouteRouteWithChildren
   AgentIndexRoute: typeof AgentIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
+    '/_storefront': {
+      id: '/_storefront'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof StorefrontRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/agent/': {
@@ -65,11 +85,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AgentIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_storefront/': {
+      id: '/_storefront/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof StorefrontIndexRouteImport
+      parentRoute: typeof StorefrontRouteRoute
+    }
+    '/_storefront/products/$slug': {
+      id: '/_storefront/products/$slug'
+      path: '/products/$slug'
+      fullPath: '/products/$slug'
+      preLoaderRoute: typeof StorefrontProductsSlugRouteImport
+      parentRoute: typeof StorefrontRouteRoute
+    }
   }
 }
 
+interface StorefrontRouteRouteChildren {
+  StorefrontIndexRoute: typeof StorefrontIndexRoute
+  StorefrontProductsSlugRoute: typeof StorefrontProductsSlugRoute
+}
+
+const StorefrontRouteRouteChildren: StorefrontRouteRouteChildren = {
+  StorefrontIndexRoute: StorefrontIndexRoute,
+  StorefrontProductsSlugRoute: StorefrontProductsSlugRoute,
+}
+
+const StorefrontRouteRouteWithChildren = StorefrontRouteRoute._addFileChildren(
+  StorefrontRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  StorefrontRouteRoute: StorefrontRouteRouteWithChildren,
   AgentIndexRoute: AgentIndexRoute,
 }
 export const routeTree = rootRouteImport
