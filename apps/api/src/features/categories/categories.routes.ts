@@ -4,7 +4,7 @@ import { HttpStatusCode } from "@/config/http-status-code";
 import {
 	getCategoryByPath,
 	getCategoryChildren,
-	getCategoryProducts,
+	getCategorySubtreeProducts,
 	listCategories,
 } from "@/features/categories/categories.queries";
 import { categoryListQuerySchema } from "@/features/categories/categories.schemas";
@@ -35,22 +35,16 @@ app.get("/", zValidator("query", categoryListQuerySchema), async (c) => {
  *
  * Returns the category, its direct children, and its products.
  */
-app.get("/*", async (c) => {
-	const wildcardParam = c.req.param("*");
-
-	if (!wildcardParam) {
-		return c.json({ error: "Category path is required" }, HttpStatusCode.BAD_REQUEST);
-	}
-
-	const wildcard = wildcardParam.replace(/\/$/, "");
-	const path = `/${wildcard}`;
+app.get("/:path{.+}", async (c) => {
+	const slug = c.req.param("path").replace(/\/$/, "");
+	const path = `/${slug}`;
 
 	const category = await getCategoryByPath(path);
 	if (!category) {
 		return c.json({ error: "Category not found" }, HttpStatusCode.NOT_FOUND);
 	}
 
-	const [children, products] = await Promise.all([getCategoryChildren(category.id), getCategoryProducts(category.id)]);
+	const [children, products] = await Promise.all([getCategoryChildren(category.id), getCategorySubtreeProducts(path)]);
 
 	return c.json({ data: { ...category, children, products } }, HttpStatusCode.OK);
 });

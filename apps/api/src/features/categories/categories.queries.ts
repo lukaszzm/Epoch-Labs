@@ -1,5 +1,5 @@
 import { categories, db, products } from "@epoch-labs/db";
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray, like, or } from "drizzle-orm";
 
 export async function listCategories() {
 	return db.select().from(categories);
@@ -48,5 +48,50 @@ export async function getCategoryProducts(categoryId: string) {
 		})
 		.from(products)
 		.where(and(eq(products.categoryId, categoryId), eq(products.status, "active"), eq(products.isIndexed, true)))
+		.orderBy(products.position);
+}
+
+export async function getCategorySubtreeProducts(categoryPath: string) {
+	const subtreeIds = await db
+		.select({ id: categories.id })
+		.from(categories)
+		.where(
+			and(
+				eq(categories.isActive, true),
+				or(eq(categories.path, categoryPath), like(categories.path, `${categoryPath}/%`)),
+			),
+		);
+
+	if (subtreeIds.length === 0) {
+		return [];
+	}
+
+	return db
+		.select({
+			id: products.id,
+			name: products.name,
+			slug: products.slug,
+			brand: products.brand,
+			shortDescription: products.shortDescription,
+			images: products.images,
+			lowestPriceInCents: products.lowestPriceInCents,
+			currency: products.currency,
+			averageRating: products.averageRating,
+			reviewCount: products.reviewCount,
+			isFeatured: products.isFeatured,
+			tags: products.tags,
+			position: products.position,
+		})
+		.from(products)
+		.where(
+			and(
+				inArray(
+					products.categoryId,
+					subtreeIds.map((c) => c.id),
+				),
+				eq(products.status, "active"),
+				eq(products.isIndexed, true),
+			),
+		)
 		.orderBy(products.position);
 }
