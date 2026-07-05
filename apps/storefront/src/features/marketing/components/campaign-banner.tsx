@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router";
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 
 export function CampaignBanner() {
 	return (
 		<section
 			aria-labelledby="campaign-banner"
-			className="bg-muted-foreground xl:rounded-md text-muted-foreground max-w-7xl mx-auto px-4 text-center"
+			className="bg-muted-foreground xl:rounded-xl text-muted-foreground container mx-auto px-4 text-center"
 		>
-			<div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-20 text-center md:py-28">
+			<div className="mx-auto flex container flex-col items-center gap-6 px-4 py-20 text-center md:py-28">
 				<p className="text-xs font-semibold uppercase tracking-widest text-background/80">Our mission</p>
 				<h2 id="campaign-heading" className="max-w-2xl text-background text-4xl font-bold tracking-tight md:text-5xl">
 					Cosmetics for Every Skin Type

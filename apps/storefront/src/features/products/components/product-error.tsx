@@ -1,7 +1,7 @@
 import { WarningCircleIcon } from "@phosphor-icons/react";
-import { BackButton } from "@/components/back-button";
-import { Container } from "@/components/container";
-import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/empty";
+import { BackButton } from "@/components/ui/back-button";
+import { Container } from "@/components/ui/container";
+import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle } from "@/components/ui/empty";
 
 export function ProductError() {
 	return (

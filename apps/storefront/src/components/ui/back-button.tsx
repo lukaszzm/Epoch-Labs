@@ -1,7 +1,7 @@
 import { ArrowLeftIcon } from "@phosphor-icons/react";
 import { type LinkProps, useNavigate, useRouter } from "@tanstack/react-router";
 import { Fragment } from "react/jsx-runtime";
-import { Button, type ButtonProps } from "@/components/button";
+import { Button, type ButtonProps } from "@/components/ui/button";
 
 export interface BackButtonProps extends Omit<ButtonProps, "onClick"> {
 	fallbackTo: LinkProps["to"];

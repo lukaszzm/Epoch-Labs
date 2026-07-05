@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { BackButton } from "@/components/back-button";
-import { Container } from "@/components/container";
+import { BackButton } from "@/components/ui/back-button";
+import { Container } from "@/components/ui/container";
 import { AddToCart } from "@/features/cart/components/add-to-cart";
 import { ProductImage } from "@/features/products/components/product-image";
 import { ProductVariantSelect } from "@/features/products/components/product-variant-select";

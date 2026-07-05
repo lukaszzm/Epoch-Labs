@@ -7,7 +7,7 @@ export function FeaturedProducts() {
 		<section
 			id="featured-products"
 			aria-labelledby="featured-products-heading"
-			className="my-8 max-w-7xl mx-auto px-4 flex flex-col gap-4"
+			className="my-8 container mx-auto px-4 flex flex-col gap-4"
 		>
 			<h2 id="featured-products-heading" className="text-3xl font-bold mb-4">
 				Featured Products

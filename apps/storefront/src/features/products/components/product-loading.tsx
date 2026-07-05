@@ -1,5 +1,5 @@
-import { Container } from "@/components/container";
-import { Skeleton } from "@/components/skeleton";
+import { Container } from "@/components/ui/container";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export function ProductLoading() {
 	return (

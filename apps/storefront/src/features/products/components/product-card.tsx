@@ -1,14 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import type { ProductProjection } from "@/features/products/schemas/product-projection-schema";
-import type { Product } from "@/features/products/schemas/product-schema";
 import { formatCurrency } from "@/utils/format-currency";
 import { ProductImage } from "./product-image";
 
-export interface ProductCardProps extends Product {
+export interface ProductCardProps {
 	product: ProductProjection;
 }
 
-export function ProductCard({ slug, name, images, brand, lowestPriceInCents, currency }: ProductCardProps) {
+export function ProductCard({
+	product: { slug, name, images, brand, lowestPriceInCents, currency },
+}: ProductCardProps) {
 	const formattedPrice = formatCurrency(lowestPriceInCents, { currency });
 	const primaryImage = images?.find((image) => image.isPrimary) || images?.at(0);
 

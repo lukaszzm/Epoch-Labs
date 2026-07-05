@@ -1,5 +1,5 @@
 import { WarningIcon } from "@phosphor-icons/react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export function FeaturedProductsError() {
 	return (

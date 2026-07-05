@@ -1,4 +1,4 @@
-import { Button, type ButtonProps } from "@/components/button";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import type { Product } from "@/features/products/schemas/product-schema";
 import type { ProductVariant } from "@/features/products/schemas/product-variant-schema";
 
@@ -12,7 +12,13 @@ export function AddToCart({ product, variant, buttonVariant, disabled, ...props 
 	const isAvailable = variant?.isAvailable ?? false;
 
 	return (
-		<Button size="xl" className="w-full" disabled={disabled || !isAvailable} variant={buttonVariant} {...props}>
+		<Button
+			size="xl"
+			className="w-full max-w-140"
+			disabled={disabled || !isAvailable}
+			variant={buttonVariant}
+			{...props}
+		>
 			{isAvailable ? "Add to Cart" : "Out of Stock"}
 		</Button>
 	);

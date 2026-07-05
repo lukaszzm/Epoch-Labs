@@ -1,6 +1,6 @@
-import { BackButton } from "@/components/back-button";
-import { Button } from "@/components/button";
-import { Container } from "@/components/container";
+import { BackButton } from "@/components/ui/back-button";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
 import { ProductImage } from "@/features/products/components/product-image";
 import type { Product } from "@/features/products/schemas/product-schema";
 import { formatCurrency } from "@/utils/format-currency";

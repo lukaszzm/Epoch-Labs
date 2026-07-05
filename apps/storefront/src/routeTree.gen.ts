@@ -13,6 +13,7 @@ import { Route as StorefrontRouteRouteImport } from './routes/_storefront/route'
 import { Route as AgentIndexRouteImport } from './routes/agent/index'
 import { Route as StorefrontIndexRouteImport } from './routes/_storefront/index'
 import { Route as StorefrontProductsSlugRouteImport } from './routes/_storefront/products/$slug'
+import { Route as StorefrontCategoriesSlugRouteImport } from './routes/_storefront/categories/$slug'
 
 const StorefrontRouteRoute = StorefrontRouteRouteImport.update({
   id: '/_storefront',
@@ -33,15 +34,23 @@ const StorefrontProductsSlugRoute = StorefrontProductsSlugRouteImport.update({
   path: '/products/$slug',
   getParentRoute: () => StorefrontRouteRoute,
 } as any)
+const StorefrontCategoriesSlugRoute =
+  StorefrontCategoriesSlugRouteImport.update({
+    id: '/categories/$slug',
+    path: '/categories/$slug',
+    getParentRoute: () => StorefrontRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof StorefrontIndexRoute
   '/agent/': typeof AgentIndexRoute
+  '/categories/$slug': typeof StorefrontCategoriesSlugRoute
   '/products/$slug': typeof StorefrontProductsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof StorefrontIndexRoute
   '/agent': typeof AgentIndexRoute
+  '/categories/$slug': typeof StorefrontCategoriesSlugRoute
   '/products/$slug': typeof StorefrontProductsSlugRoute
 }
 export interface FileRoutesById {
@@ -49,18 +58,20 @@ export interface FileRoutesById {
   '/_storefront': typeof StorefrontRouteRouteWithChildren
   '/_storefront/': typeof StorefrontIndexRoute
   '/agent/': typeof AgentIndexRoute
+  '/_storefront/categories/$slug': typeof StorefrontCategoriesSlugRoute
   '/_storefront/products/$slug': typeof StorefrontProductsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/agent/' | '/products/$slug'
+  fullPaths: '/' | '/agent/' | '/categories/$slug' | '/products/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/agent' | '/products/$slug'
+  to: '/' | '/agent' | '/categories/$slug' | '/products/$slug'
   id:
     | '__root__'
     | '/_storefront'
     | '/_storefront/'
     | '/agent/'
+    | '/_storefront/categories/$slug'
     | '/_storefront/products/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -99,16 +110,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StorefrontProductsSlugRouteImport
       parentRoute: typeof StorefrontRouteRoute
     }
+    '/_storefront/categories/$slug': {
+      id: '/_storefront/categories/$slug'
+      path: '/categories/$slug'
+      fullPath: '/categories/$slug'
+      preLoaderRoute: typeof StorefrontCategoriesSlugRouteImport
+      parentRoute: typeof StorefrontRouteRoute
+    }
   }
 }
 
 interface StorefrontRouteRouteChildren {
   StorefrontIndexRoute: typeof StorefrontIndexRoute
+  StorefrontCategoriesSlugRoute: typeof StorefrontCategoriesSlugRoute
   StorefrontProductsSlugRoute: typeof StorefrontProductsSlugRoute
 }
 
 const StorefrontRouteRouteChildren: StorefrontRouteRouteChildren = {
   StorefrontIndexRoute: StorefrontIndexRoute,
+  StorefrontCategoriesSlugRoute: StorefrontCategoriesSlugRoute,
   StorefrontProductsSlugRoute: StorefrontProductsSlugRoute,
 }
 

@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/agent/")({
-	component: RouteComponent,
+	component: AgentPage,
 });
 
-function RouteComponent() {
+function AgentPage() {
 	return <div>Hello "/agent/"!</div>;
 }

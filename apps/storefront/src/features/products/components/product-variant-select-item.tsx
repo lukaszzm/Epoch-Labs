@@ -1,4 +1,4 @@
-import { Button } from "@/components/button";
+import { Button } from "@/components/ui/button";
 import type { ProductVariant } from "@/features/products/schemas/product-variant-schema";
 
 export interface ProductVariantSelectItemProps {
