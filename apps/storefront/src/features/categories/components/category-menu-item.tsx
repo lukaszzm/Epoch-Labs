@@ -5,7 +5,7 @@ import {
 	NavigationMenuLink,
 	NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import type { CategoryNode } from "@/features/categories/schemas/category-schema";
+import type { CategoryNode } from "@/features/categories/schemas/category-node-schema";
 
 export interface CategoryMenuItemProps {
 	categoryNode: CategoryNode;
@@ -16,7 +16,7 @@ export function CategoryMenuItem({ categoryNode }: CategoryMenuItemProps) {
 		return (
 			<NavigationMenuItem>
 				<NavigationMenuLink asChild>
-					<Link to={`/categories/$slug`} params={{ slug: categoryNode.slug }}>
+					<Link to={`/categories/$path`} params={{ path: categoryNode.path }}>
 						{categoryNode.name}
 					</Link>
 				</NavigationMenuLink>
@@ -31,7 +31,7 @@ export function CategoryMenuItem({ categoryNode }: CategoryMenuItemProps) {
 				<ul className="w-96">
 					<li>
 						<NavigationMenuLink asChild>
-							<Link to={`/categories/$slug`} params={{ slug: categoryNode.slug }}>
+							<Link to={`/categories/$path`} params={{ path: categoryNode.path }}>
 								View All
 							</Link>
 						</NavigationMenuLink>
@@ -39,7 +39,7 @@ export function CategoryMenuItem({ categoryNode }: CategoryMenuItemProps) {
 					{categoryNode.children.map((child) => (
 						<li key={child.id}>
 							<NavigationMenuLink asChild>
-								<Link to={`/categories/$slug`} className="font-normal" params={{ slug: child.slug }}>
+								<Link to={`/categories/$path`} className="font-normal" params={{ path: child.path }}>
 									{child.name}
 								</Link>
 							</NavigationMenuLink>

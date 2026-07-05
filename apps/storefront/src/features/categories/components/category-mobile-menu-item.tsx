@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import type { CategoryNode } from "@/features/categories/schemas/category-schema";
+import type { CategoryNode } from "@/features/categories/schemas/category-node-schema";
 
 export interface CategoryMobileMenuItemProps {
 	categoryNode: CategoryNode;
@@ -16,7 +16,7 @@ export function CategoryMobileMenuItem({ categoryNode, onNavigate }: CategoryMob
 	if (categoryNode.children.length === 0) {
 		return (
 			<Button variant="ghost" size="lg" className="justify-start" asChild>
-				<Link to="/categories/$slug" params={{ slug: categoryNode.slug }} onClick={onNavigate}>
+				<Link to="/categories/$path" params={{ path: categoryNode.path }} onClick={onNavigate}>
 					{categoryNode.name}
 				</Link>
 			</Button>
@@ -35,7 +35,7 @@ export function CategoryMobileMenuItem({ categoryNode, onNavigate }: CategoryMob
 				<ul className="mt-0.5 flex flex-col gap-0.5 border-l border-border ml-4 pl-3">
 					<li>
 						<Button variant="ghost" size="lg" className="w-full justify-start" asChild>
-							<Link to="/categories/$slug" params={{ slug: categoryNode.slug }} onClick={onNavigate}>
+							<Link to="/categories/$path" params={{ path: categoryNode.path }} onClick={onNavigate}>
 								View All
 							</Link>
 						</Button>
@@ -43,7 +43,7 @@ export function CategoryMobileMenuItem({ categoryNode, onNavigate }: CategoryMob
 					{categoryNode.children.map((child) => (
 						<li key={child.id}>
 							<Button variant="ghost" size="lg" className="w-full justify-start font-normal" asChild>
-								<Link to="/categories/$slug" params={{ slug: child.slug }} onClick={onNavigate}>
+								<Link to="/categories/$path" params={{ path: child.path }} onClick={onNavigate}>
 									{child.name}
 								</Link>
 							</Button>

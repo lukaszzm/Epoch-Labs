@@ -14,11 +14,3 @@ export const categorySchema = z.object({
 });
 
 export type Category = z.infer<typeof categorySchema>;
-
-export type CategoryNode = Category & { children: CategoryNode[] };
-
-export const categoryNodeSchema: z.ZodType<CategoryNode> = z.lazy(() =>
-	categorySchema.extend({
-		children: z.array(categoryNodeSchema),
-	}),
-);

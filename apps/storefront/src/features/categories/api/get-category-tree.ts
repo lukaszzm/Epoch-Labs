@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { ApiRoute } from "@/config/api-routes";
-import { categoryNodeSchema } from "@/features/categories/schemas/category-schema";
+import { categoryNodeSchema } from "@/features/categories/schemas/category-node-schema";
 import { buildApiUrl } from "@/utils/build-api-url";
 
 const getCategoryTreeOutputSchema = z.object({
