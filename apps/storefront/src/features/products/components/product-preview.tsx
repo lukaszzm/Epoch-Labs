@@ -17,7 +17,7 @@ export function ProductPreview({ product }: ProductPreviewProps) {
 
 	return (
 		<Container>
-			<BackButton fallbackTo="/" className="mb-6" />
+			<BackButton className="mb-6" />
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-start">
 				<div className="relative aspect-square overflow-hidden rounded-xl bg-muted">
 					<ProductImage

@@ -19,7 +19,7 @@ const getCategoryByPathOutputSchema = z.object({
 export const getCategoryByPath = createServerFn()
 	.inputValidator(getCategoryByPathInputSchema)
 	.handler(async ({ data: { path } }) => {
-		const url = `${buildApiUrl(ApiRoute.CATEGORIES)}${path}`;
+		const url = `${buildApiUrl(ApiRoute.CATEGORIES)}/${path}`;
 		const response = await fetch(url);
 
 		if (response.status === 404) {

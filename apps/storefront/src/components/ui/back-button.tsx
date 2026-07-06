@@ -1,13 +1,14 @@
 import { ArrowLeftIcon } from "@phosphor-icons/react";
-import { type LinkProps, useNavigate, useRouter } from "@tanstack/react-router";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import { Fragment } from "react/jsx-runtime";
 import { Button, type ButtonProps } from "@/components/ui/button";
+import { AppRoute } from "@/config/app-routes";
 
 export interface BackButtonProps extends Omit<ButtonProps, "onClick"> {
-	fallbackTo: LinkProps["to"];
+	fallbackTo?: AppRoute;
 }
 
-export function BackButton({ fallbackTo, children, ...props }: BackButtonProps) {
+export function BackButton({ fallbackTo = AppRoute.HOME, children, ...props }: BackButtonProps) {
 	const router = useRouter();
 	const navigate = useNavigate();
 

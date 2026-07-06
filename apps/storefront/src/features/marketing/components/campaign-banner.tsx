@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { AppRoute } from "@/config/app-routes";
 
 export function CampaignBanner() {
 	return (
@@ -16,7 +17,7 @@ export function CampaignBanner() {
 					Our products are designed to cater to all skin types, ensuring everyone can find their perfect match.
 				</p>
 				<Button variant="outline" size="lg" className="mt-2 text-background hover:text-background" asChild>
-					<Link to="/">Explore Collections</Link>
+					<Link to={AppRoute.HOME}>Explore Collections</Link>
 				</Button>
 			</div>
 		</section>

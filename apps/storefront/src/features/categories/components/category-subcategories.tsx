@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { AppRoute } from "@/config/app-routes";
 import type { Category } from "@/features/categories/schemas/category-schema";
+import { categoryPathToSplat } from "@/features/categories/utils/category-path-to-splat";
 
 export interface CategorySubcategoriesProps {
 	subcategories: Category[];
@@ -18,7 +20,7 @@ export function CategorySubcategories({ subcategories }: CategorySubcategoriesPr
 				{subcategories.map((subcategory) => (
 					<li key={subcategory.id}>
 						<Button variant="outline" size="sm" asChild>
-							<Link to="/categories/$path" params={{ path: subcategory.path }}>
+							<Link to={AppRoute.CATEGORY} params={{ _splat: categoryPathToSplat(subcategory.path) }}>
 								{subcategory.name}
 							</Link>
 						</Button>

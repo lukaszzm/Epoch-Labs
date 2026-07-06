@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Image } from "@unpic/react";
 import { Button } from "@/components/ui/button";
+import { AppRoute } from "@/config/app-routes";
 import hero from "/hero.jpg?url";
 
 export function Hero() {
@@ -17,7 +18,7 @@ export function Hero() {
 						with Epoch Labs.
 					</p>
 					<Button size="lg" className="mt-4 min-w-32" asChild>
-						<Link to="/">Shop Now</Link>
+						<Link to={AppRoute.HOME}>Shop Now</Link>
 					</Button>
 				</div>
 			</div>

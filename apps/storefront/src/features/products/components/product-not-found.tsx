@@ -17,7 +17,7 @@ export function ProductNotFound() {
 					</EmptyDescription>
 				</EmptyHeader>
 				<EmptyContent>
-					<BackButton fallbackTo="/" variant="outline" size="lg">
+					<BackButton variant="outline" size="lg">
 						Go Back
 					</BackButton>
 				</EmptyContent>

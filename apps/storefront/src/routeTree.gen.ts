@@ -13,7 +13,7 @@ import { Route as StorefrontRouteRouteImport } from './routes/_storefront/route'
 import { Route as AgentIndexRouteImport } from './routes/agent/index'
 import { Route as StorefrontIndexRouteImport } from './routes/_storefront/index'
 import { Route as StorefrontProductsSlugRouteImport } from './routes/_storefront/products/$slug'
-import { Route as StorefrontCategoriesPathRouteImport } from './routes/_storefront/categories/$path'
+import { Route as StorefrontCategoriesSplatRouteImport } from './routes/_storefront/categories/$'
 
 const StorefrontRouteRoute = StorefrontRouteRouteImport.update({
   id: '/_storefront',
@@ -34,23 +34,23 @@ const StorefrontProductsSlugRoute = StorefrontProductsSlugRouteImport.update({
   path: '/products/$slug',
   getParentRoute: () => StorefrontRouteRoute,
 } as any)
-const StorefrontCategoriesPathRoute =
-  StorefrontCategoriesPathRouteImport.update({
-    id: '/categories/$path',
-    path: '/categories/$path',
+const StorefrontCategoriesSplatRoute =
+  StorefrontCategoriesSplatRouteImport.update({
+    id: '/categories/$',
+    path: '/categories/$',
     getParentRoute: () => StorefrontRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof StorefrontIndexRoute
   '/agent/': typeof AgentIndexRoute
-  '/categories/$path': typeof StorefrontCategoriesPathRoute
+  '/categories/$': typeof StorefrontCategoriesSplatRoute
   '/products/$slug': typeof StorefrontProductsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof StorefrontIndexRoute
   '/agent': typeof AgentIndexRoute
-  '/categories/$path': typeof StorefrontCategoriesPathRoute
+  '/categories/$': typeof StorefrontCategoriesSplatRoute
   '/products/$slug': typeof StorefrontProductsSlugRoute
 }
 export interface FileRoutesById {
@@ -58,20 +58,20 @@ export interface FileRoutesById {
   '/_storefront': typeof StorefrontRouteRouteWithChildren
   '/_storefront/': typeof StorefrontIndexRoute
   '/agent/': typeof AgentIndexRoute
-  '/_storefront/categories/$path': typeof StorefrontCategoriesPathRoute
+  '/_storefront/categories/$': typeof StorefrontCategoriesSplatRoute
   '/_storefront/products/$slug': typeof StorefrontProductsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/agent/' | '/categories/$path' | '/products/$slug'
+  fullPaths: '/' | '/agent/' | '/categories/$' | '/products/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/agent' | '/categories/$path' | '/products/$slug'
+  to: '/' | '/agent' | '/categories/$' | '/products/$slug'
   id:
     | '__root__'
     | '/_storefront'
     | '/_storefront/'
     | '/agent/'
-    | '/_storefront/categories/$path'
+    | '/_storefront/categories/$'
     | '/_storefront/products/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -110,11 +110,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StorefrontProductsSlugRouteImport
       parentRoute: typeof StorefrontRouteRoute
     }
-    '/_storefront/categories/$path': {
-      id: '/_storefront/categories/$path'
-      path: '/categories/$path'
-      fullPath: '/categories/$path'
-      preLoaderRoute: typeof StorefrontCategoriesPathRouteImport
+    '/_storefront/categories/$': {
+      id: '/_storefront/categories/$'
+      path: '/categories/$'
+      fullPath: '/categories/$'
+      preLoaderRoute: typeof StorefrontCategoriesSplatRouteImport
       parentRoute: typeof StorefrontRouteRoute
     }
   }
@@ -122,13 +122,13 @@ declare module '@tanstack/react-router' {
 
 interface StorefrontRouteRouteChildren {
   StorefrontIndexRoute: typeof StorefrontIndexRoute
-  StorefrontCategoriesPathRoute: typeof StorefrontCategoriesPathRoute
+  StorefrontCategoriesSplatRoute: typeof StorefrontCategoriesSplatRoute
   StorefrontProductsSlugRoute: typeof StorefrontProductsSlugRoute
 }
 
 const StorefrontRouteRouteChildren: StorefrontRouteRouteChildren = {
   StorefrontIndexRoute: StorefrontIndexRoute,
-  StorefrontCategoriesPathRoute: StorefrontCategoriesPathRoute,
+  StorefrontCategoriesSplatRoute: StorefrontCategoriesSplatRoute,
   StorefrontProductsSlugRoute: StorefrontProductsSlugRoute,
 }
 

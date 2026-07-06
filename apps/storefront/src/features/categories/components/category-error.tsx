@@ -15,7 +15,7 @@ export function CategoryError() {
 					<EmptyDescription>We couldn't load this category. Please try again later.</EmptyDescription>
 				</EmptyHeader>
 				<EmptyContent>
-					<BackButton fallbackTo="/" variant="outline" size="lg">
+					<BackButton variant="outline" size="lg">
 						Go Back
 					</BackButton>
 				</EmptyContent>
