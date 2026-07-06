@@ -7,7 +7,7 @@ import {
 	getCategorySubtreeProducts,
 	listCategories,
 } from "@/features/categories/categories.queries";
-import { categoryListQuerySchema } from "@/features/categories/categories.schemas";
+import { categoryListQuerySchema, categoryPathQuerySchema } from "@/features/categories/categories.schemas";
 import { buildCategoryTree } from "@/features/categories/utils/build-category-tree";
 
 const app = new Hono();
@@ -35,18 +35,24 @@ app.get("/", zValidator("query", categoryListQuerySchema), async (c) => {
  *
  * Returns the category, its direct children, and its products.
  */
-app.get("/:path{.+}", async (c) => {
+app.get("/:path{.+}", zValidator("query", categoryPathQuerySchema), async (c) => {
 	const slug = c.req.param("path").replace(/\/$/, "");
 	const path = `/${slug}`;
+	const { sort, page, limit } = c.req.valid("query");
 
 	const category = await getCategoryByPath(path);
 	if (!category) {
 		return c.json({ error: "Category not found" }, HttpStatusCode.NOT_FOUND);
 	}
 
-	const [children, products] = await Promise.all([getCategoryChildren(category.id), getCategorySubtreeProducts(path)]);
+	const [children, { products, total }] = await Promise.all([
+		getCategoryChildren(category.id),
+		getCategorySubtreeProducts(path, { sort, page, limit }),
+	]);
 
-	return c.json({ data: { ...category, children, products } }, HttpStatusCode.OK);
+	const totalPages = Math.ceil(total / limit);
+
+	return c.json({ data: { ...category, children, products, total, page, limit, totalPages } }, HttpStatusCode.OK);
 });
 
 export default app;
