@@ -10,8 +10,10 @@ export function MiniCart() {
 	const [open, setOpen] = useState(false);
 	const { data: cart } = useCart();
 
-	const itemCount = cart?.items.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
-	const subtotalInCents = cart?.items.reduce((sum, item) => sum + item.priceSnapshot * item.quantity, 0) ?? 0;
+	const cartItems = cart?.items ?? [];
+
+	const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+	const subtotalInCents = cartItems.reduce((sum, item) => sum + item.priceSnapshot * item.quantity, 0);
 
 	return (
 		<Sheet open={open} onOpenChange={setOpen}>
@@ -24,8 +26,12 @@ export function MiniCart() {
 				</SheetHeader>
 				{itemCount > 0 ? (
 					<Fragment>
-						<MiniCartList items={cart?.items ?? []} onNavigate={() => setOpen(false)} />
-						<MiniCartFooter subtotalInCents={subtotalInCents} />
+						<MiniCartList items={cartItems} onNavigate={() => setOpen(false)} />
+						<MiniCartFooter
+							subtotalInCents={subtotalInCents}
+							itemCount={itemCount}
+							onProceedToCheckout={() => setOpen(false)}
+						/>
 					</Fragment>
 				) : (
 					<MiniCartEmpty />

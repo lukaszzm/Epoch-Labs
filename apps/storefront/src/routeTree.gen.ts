@@ -12,7 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as StorefrontRouteRouteImport } from './routes/_storefront/route'
 import { Route as AgentIndexRouteImport } from './routes/agent/index'
 import { Route as StorefrontIndexRouteImport } from './routes/_storefront/index'
+import { Route as StorefrontCheckoutRouteRouteImport } from './routes/_storefront/checkout/route'
+import { Route as StorefrontCheckoutIndexRouteImport } from './routes/_storefront/checkout/index'
 import { Route as StorefrontProductsSlugRouteImport } from './routes/_storefront/products/$slug'
+import { Route as StorefrontOrderConfirmationIdRouteImport } from './routes/_storefront/order-confirmation/$id'
 import { Route as StorefrontCategoriesSplatRouteImport } from './routes/_storefront/categories/$'
 
 const StorefrontRouteRoute = StorefrontRouteRouteImport.update({
@@ -29,11 +32,27 @@ const StorefrontIndexRoute = StorefrontIndexRouteImport.update({
   path: '/',
   getParentRoute: () => StorefrontRouteRoute,
 } as any)
+const StorefrontCheckoutRouteRoute = StorefrontCheckoutRouteRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => StorefrontRouteRoute,
+} as any)
+const StorefrontCheckoutIndexRoute = StorefrontCheckoutIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StorefrontCheckoutRouteRoute,
+} as any)
 const StorefrontProductsSlugRoute = StorefrontProductsSlugRouteImport.update({
   id: '/products/$slug',
   path: '/products/$slug',
   getParentRoute: () => StorefrontRouteRoute,
 } as any)
+const StorefrontOrderConfirmationIdRoute =
+  StorefrontOrderConfirmationIdRouteImport.update({
+    id: '/order-confirmation/$id',
+    path: '/order-confirmation/$id',
+    getParentRoute: () => StorefrontRouteRoute,
+  } as any)
 const StorefrontCategoriesSplatRoute =
   StorefrontCategoriesSplatRouteImport.update({
     id: '/categories/$',
@@ -43,36 +62,60 @@ const StorefrontCategoriesSplatRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof StorefrontIndexRoute
+  '/checkout': typeof StorefrontCheckoutRouteRouteWithChildren
   '/agent/': typeof AgentIndexRoute
   '/categories/$': typeof StorefrontCategoriesSplatRoute
+  '/order-confirmation/$id': typeof StorefrontOrderConfirmationIdRoute
   '/products/$slug': typeof StorefrontProductsSlugRoute
+  '/checkout/': typeof StorefrontCheckoutIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof StorefrontIndexRoute
   '/agent': typeof AgentIndexRoute
   '/categories/$': typeof StorefrontCategoriesSplatRoute
+  '/order-confirmation/$id': typeof StorefrontOrderConfirmationIdRoute
   '/products/$slug': typeof StorefrontProductsSlugRoute
+  '/checkout': typeof StorefrontCheckoutIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_storefront': typeof StorefrontRouteRouteWithChildren
+  '/_storefront/checkout': typeof StorefrontCheckoutRouteRouteWithChildren
   '/_storefront/': typeof StorefrontIndexRoute
   '/agent/': typeof AgentIndexRoute
   '/_storefront/categories/$': typeof StorefrontCategoriesSplatRoute
+  '/_storefront/order-confirmation/$id': typeof StorefrontOrderConfirmationIdRoute
   '/_storefront/products/$slug': typeof StorefrontProductsSlugRoute
+  '/_storefront/checkout/': typeof StorefrontCheckoutIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/agent/' | '/categories/$' | '/products/$slug'
+  fullPaths:
+    | '/'
+    | '/checkout'
+    | '/agent/'
+    | '/categories/$'
+    | '/order-confirmation/$id'
+    | '/products/$slug'
+    | '/checkout/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/agent' | '/categories/$' | '/products/$slug'
+  to:
+    | '/'
+    | '/agent'
+    | '/categories/$'
+    | '/order-confirmation/$id'
+    | '/products/$slug'
+    | '/checkout'
   id:
     | '__root__'
     | '/_storefront'
+    | '/_storefront/checkout'
     | '/_storefront/'
     | '/agent/'
     | '/_storefront/categories/$'
+    | '/_storefront/order-confirmation/$id'
     | '/_storefront/products/$slug'
+    | '/_storefront/checkout/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -103,11 +146,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StorefrontIndexRouteImport
       parentRoute: typeof StorefrontRouteRoute
     }
+    '/_storefront/checkout': {
+      id: '/_storefront/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof StorefrontCheckoutRouteRouteImport
+      parentRoute: typeof StorefrontRouteRoute
+    }
+    '/_storefront/checkout/': {
+      id: '/_storefront/checkout/'
+      path: '/'
+      fullPath: '/checkout/'
+      preLoaderRoute: typeof StorefrontCheckoutIndexRouteImport
+      parentRoute: typeof StorefrontCheckoutRouteRoute
+    }
     '/_storefront/products/$slug': {
       id: '/_storefront/products/$slug'
       path: '/products/$slug'
       fullPath: '/products/$slug'
       preLoaderRoute: typeof StorefrontProductsSlugRouteImport
+      parentRoute: typeof StorefrontRouteRoute
+    }
+    '/_storefront/order-confirmation/$id': {
+      id: '/_storefront/order-confirmation/$id'
+      path: '/order-confirmation/$id'
+      fullPath: '/order-confirmation/$id'
+      preLoaderRoute: typeof StorefrontOrderConfirmationIdRouteImport
       parentRoute: typeof StorefrontRouteRoute
     }
     '/_storefront/categories/$': {
@@ -120,15 +184,33 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface StorefrontCheckoutRouteRouteChildren {
+  StorefrontCheckoutIndexRoute: typeof StorefrontCheckoutIndexRoute
+}
+
+const StorefrontCheckoutRouteRouteChildren: StorefrontCheckoutRouteRouteChildren =
+  {
+    StorefrontCheckoutIndexRoute: StorefrontCheckoutIndexRoute,
+  }
+
+const StorefrontCheckoutRouteRouteWithChildren =
+  StorefrontCheckoutRouteRoute._addFileChildren(
+    StorefrontCheckoutRouteRouteChildren,
+  )
+
 interface StorefrontRouteRouteChildren {
+  StorefrontCheckoutRouteRoute: typeof StorefrontCheckoutRouteRouteWithChildren
   StorefrontIndexRoute: typeof StorefrontIndexRoute
   StorefrontCategoriesSplatRoute: typeof StorefrontCategoriesSplatRoute
+  StorefrontOrderConfirmationIdRoute: typeof StorefrontOrderConfirmationIdRoute
   StorefrontProductsSlugRoute: typeof StorefrontProductsSlugRoute
 }
 
 const StorefrontRouteRouteChildren: StorefrontRouteRouteChildren = {
+  StorefrontCheckoutRouteRoute: StorefrontCheckoutRouteRouteWithChildren,
   StorefrontIndexRoute: StorefrontIndexRoute,
   StorefrontCategoriesSplatRoute: StorefrontCategoriesSplatRoute,
+  StorefrontOrderConfirmationIdRoute: StorefrontOrderConfirmationIdRoute,
   StorefrontProductsSlugRoute: StorefrontProductsSlugRoute,
 }
 

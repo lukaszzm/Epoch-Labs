@@ -5,6 +5,7 @@ export const AppRoute = {
 	CATEGORY: "/categories/$",
 	PRODUCT: "/products/$slug",
 	AGENT: "/agent",
+	ORDER_CONFIRMATION: "/order-confirmation/$id",
 } as const satisfies Record<string, LinkProps["to"]>;
 
 export type AppRoute = (typeof AppRoute)[keyof typeof AppRoute];
