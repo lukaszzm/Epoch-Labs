@@ -11,6 +11,11 @@ import {
 } from "@epoch-labs/db";
 import { and, eq } from "drizzle-orm";
 
+export async function getOrderById(id: string) {
+	const [order] = await db.select().from(orders).where(eq(orders.id, id)).limit(1);
+	return order ?? null;
+}
+
 export async function convertCartToOrder(sessionId: string, shippingAddress?: ShippingAddress, currency = "USD") {
 	const [cart] = await db
 		.select()
