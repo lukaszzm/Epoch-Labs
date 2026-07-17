@@ -1,40 +1,31 @@
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { useAddToCart } from "@/features/cart/hooks/use-add-to-cart";
-import type { Product } from "@/features/products/schemas/product-schema";
 import type { ProductVariant } from "@/features/products/schemas/product-variant-schema";
 
 interface AddToCartProps extends Omit<ButtonProps, "children" | "variant" | "onClick"> {
-	product: Product;
-	variant: ProductVariant | null;
+	variant: ProductVariant;
+	quantity?: number;
 	buttonVariant?: ButtonProps["variant"];
+	onAddToCart?: () => void;
 }
 
 export function AddToCart({
-	product: _product,
-	variant,
+	variant: { id, isAvailable },
+	quantity = 1,
 	buttonVariant,
 	disabled,
+	onAddToCart,
 	...props
 }: AddToCartProps): React.ReactNode {
-	const { mutate: addToCart, isPending } = useAddToCart();
-
-	const isAvailable = variant?.isAvailable ?? false;
-
-	function handleClick() {
-		if (!variant) {
-			return;
-		}
-
-		addToCart({ variantId: variant.id, quantity: 1 });
-	}
+	const { mutate: addToCart, isPending } = useAddToCart({ onSuccess: onAddToCart });
 
 	return (
 		<Button
 			size="xl"
-			className="w-full max-w-140"
+			className="w-full max-w-120"
 			disabled={disabled || !isAvailable || isPending}
 			variant={buttonVariant}
-			onClick={handleClick}
+			onClick={() => addToCart({ variantId: id, quantity })}
 			{...props}
 		>
 			{isPending ? "Adding…" : isAvailable ? "Add to Cart" : "Out of Stock"}

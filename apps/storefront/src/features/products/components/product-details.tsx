@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/container";
 import { AddToCart } from "@/features/cart/components/add-to-cart";
 import { ProductImage } from "@/features/products/components/product-image";
 import { ProductVariantSelect } from "@/features/products/components/product-variant-select";
+import { QuantitySelector } from "@/features/products/components/quantity-selector";
 import type { Product } from "@/features/products/schemas/product-schema";
 import type { ProductVariant } from "@/features/products/schemas/product-variant-schema";
 import { getDefaultVariantOrThrow } from "@/features/products/utils/get-default-variant-or-throw";
@@ -13,11 +14,14 @@ interface ProductDetailsProps {
 	product: Product;
 }
 
+const DEFAULT_QUANTITY = 1;
+
 export function ProductDetails({ product }: ProductDetailsProps) {
 	const { name, brand, shortDescription, images, currency, variants } = product;
 
 	const defaultVariant = getDefaultVariantOrThrow(product);
 	const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(defaultVariant);
+	const [quantity, setQuantity] = useState(DEFAULT_QUANTITY);
 
 	const primaryImage = images?.find((img) => img.isPrimary) ?? images?.at(0);
 
@@ -65,7 +69,14 @@ export function ProductDetails({ product }: ProductDetailsProps) {
 							/>
 						</div>
 					)}
-					<AddToCart product={product} variant={selectedVariant} />
+					<div className="flex flex-col items-start gap-4">
+						<QuantitySelector quantity={quantity} onChange={setQuantity} />
+						<AddToCart
+							variant={selectedVariant}
+							quantity={quantity}
+							onAddToCart={() => setQuantity(DEFAULT_QUANTITY)}
+						/>
+					</div>
 				</div>
 			</div>
 		</Container>

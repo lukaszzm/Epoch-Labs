@@ -4,19 +4,27 @@ import { patchCartItems } from "@/features/cart/api/patch-cart-items";
 import { cartQueryKey } from "@/features/cart/utils/cart-query-key";
 import { getOrCreateSessionId } from "@/features/cart/utils/get-or-create-session";
 
-type AddToCartOptions = { variantId: string; quantity?: number };
+interface AddToCartOptions {
+	variantId: string;
+	quantity?: number;
+}
 
-export function useAddToCart() {
+interface UseAddToCartOptions {
+	onSuccess?: () => void;
+}
+
+export function useAddToCart({ onSuccess }: UseAddToCartOptions = {}) {
 	const queryClient = useQueryClient();
 
 	return useMutation({
 		mutationFn: async ({ variantId, quantity = 1 }: AddToCartOptions) => {
 			const sessionId = getOrCreateSessionId();
 			await ensureCart(sessionId);
-			return patchCartItems(sessionId, [{ variantId, quantity }]);
+			return patchCartItems(sessionId, [{ variantId, quantity }], "accumulate");
 		},
 		onSuccess: (data) => {
 			queryClient.setQueryData(cartQueryKey(getOrCreateSessionId()), data);
+			onSuccess?.();
 		},
 	});
 }
