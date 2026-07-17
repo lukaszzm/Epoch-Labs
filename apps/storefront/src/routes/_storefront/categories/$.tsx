@@ -57,9 +57,9 @@ function CategoryPage() {
 				<h1 className="text-2xl font-semibold tracking-tight">{category.name}</h1>
 				<CategoryBreadcrumb currentCategory={category} />
 			</div>
-			<div className="flex gap-8">
+			<div className="flex flex-col xl:flex-row gap-8">
 				{category.children.length > 0 && (
-					<aside className="w-56 shrink-0">
+					<aside className="w-full xl:max-w-56 shrink-0">
 						<CategorySubcategories subcategories={category.children} />
 					</aside>
 				)}
