@@ -41,14 +41,14 @@ app.get("/:sessionId", async (c) => {
  */
 app.patch("/:sessionId/items", zValidator("json", patchCartItemsBodySchema), async (c) => {
 	const sessionId = c.req.param("sessionId");
-	const { items } = c.req.valid("json");
+	const { items, mode } = c.req.valid("json");
 
 	const cart = await getCartBySessionId(sessionId);
 	if (!cart) {
 		return c.json({ error: "Cart not found" }, HttpStatusCode.NOT_FOUND);
 	}
 
-	await patchCartItems(cart.id, items);
+	await patchCartItems(cart.id, items, mode);
 
 	const updated = await getCartBySessionId(sessionId);
 	return c.json({ data: updated }, HttpStatusCode.OK);

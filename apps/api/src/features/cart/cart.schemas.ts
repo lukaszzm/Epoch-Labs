@@ -16,4 +16,9 @@ export const cartItemSchema = z.object({
 
 export const patchCartItemsBodySchema = z.object({
 	items: z.array(cartItemSchema).min(1),
+	/**
+	 * "accumulate" accumulates quantity on top of any existing value.
+	 * "replace" replaces the quantity with the new value (default).
+	 */
+	mode: z.enum(["accumulate", "replace"]).default("replace"),
 });

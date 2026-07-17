@@ -2,6 +2,8 @@ import { randomUUID } from "node:crypto";
 import { cartItems, carts, db, products, productVariants } from "@epoch-labs/db";
 import { and, eq, inArray, sql } from "drizzle-orm";
 
+type CartQuantityUpdate = "accumulate" | "replace";
+
 interface CartItem {
 	variantId: string;
 	quantity: number;
@@ -27,7 +29,7 @@ async function deleteCartItems(tx: Tx, cartId: string, variantIds: string[]) {
 	await tx.delete(cartItems).where(and(eq(cartItems.cartId, cartId), inArray(cartItems.productVariantId, variantIds)));
 }
 
-async function upsertCartItems(tx: Tx, values: CartItemInsert[]) {
+async function upsertCartItems(tx: Tx, values: CartItemInsert[], mode: CartQuantityUpdate) {
 	if (values.length === 0) {
 		return;
 	}
@@ -37,7 +39,9 @@ async function upsertCartItems(tx: Tx, values: CartItemInsert[]) {
 		.values(values)
 		.onConflictDoUpdate({
 			target: [cartItems.cartId, cartItems.productVariantId],
-			set: { quantity: sql`excluded.quantity` },
+			set: {
+				quantity: mode === "accumulate" ? sql`${cartItems.quantity} + excluded.quantity` : sql`excluded.quantity`,
+			},
 		});
 }
 
@@ -120,7 +124,7 @@ async function fetchVariantPrices(variantIds: string[]): Promise<VariantPriceMap
 	return new Map(rows.map((r) => [r.id, r.priceInCents]));
 }
 
-export async function patchCartItems(cartId: string, items: CartItem[]) {
+export async function patchCartItems(cartId: string, items: CartItem[], mode: CartQuantityUpdate = "replace") {
 	const itemIdsToDelete = items.filter((i) => i.quantity <= 0).map((i) => i.variantId);
 	const itemsToUpsert = items.filter((i) => i.quantity > 0);
 
@@ -138,7 +142,7 @@ export async function patchCartItems(cartId: string, items: CartItem[]) {
 
 	await db.transaction(async (tx) => {
 		await deleteCartItems(tx, cartId, itemIdsToDelete);
-		await upsertCartItems(tx, upsertValues);
+		await upsertCartItems(tx, upsertValues, mode);
 		await tx.update(carts).set({ updatedAt: new Date() }).where(eq(carts.id, cartId));
 	});
 }
