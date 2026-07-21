@@ -9,6 +9,7 @@
 	"types": "/dist/index.d.ts",
 	"exports": {
 		".": {
+			"default": "./dist/index.mjs",
 			"types": "./dist/index.d.mts",
 			"import": "./dist/index.mjs"
 		}
