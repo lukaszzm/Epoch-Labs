@@ -2,7 +2,6 @@ import { Logo } from "@/components/ui/logo";
 import { MiniCart } from "@/features/cart/components/mini-cart";
 import { CategoryMenu } from "@/features/categories/components/category-menu";
 import { CategoryMobileMenu } from "@/features/categories/components/category-mobile-menu";
-import { CustomerProfile } from "@/features/customer/components/customer-profile";
 
 export function Header() {
 	return (
@@ -14,7 +13,6 @@ export function Header() {
 				</div>
 				<CategoryMenu />
 				<div className="flex items-center gap-1">
-					<CustomerProfile />
 					<MiniCart />
 				</div>
 			</div>
