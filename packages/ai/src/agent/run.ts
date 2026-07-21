@@ -1,9 +1,10 @@
+import { SYSTEM_PROMPT } from "@ai/agent/system-prompt";
+import { buildToolsRegistry } from "@ai/agent/tools-registry";
+import { geminiLanguage } from "@ai/lib/gemini";
 import type { Message } from "@epoch-labs/db";
 import type { ModelMessage } from "ai";
 import { stepCountIs, streamText } from "ai";
-import { gemini3Pro } from "../lib/gemini";
-import { SYSTEM_PROMPT } from "./system-prompt";
-import { buildToolsRegistry } from "./tools-registry";
+
 
 export type SseEvent =
 	| { type: "text"; chunk: string }
@@ -53,7 +54,7 @@ export async function* runAgent(params: {
 	const tools = buildToolsRegistry(params.sessionId);
 
 	const result = streamText({
-		model: gemini3Pro,
+		model: geminiLanguage,
 		system: SYSTEM_PROMPT,
 		messages,
 		tools,

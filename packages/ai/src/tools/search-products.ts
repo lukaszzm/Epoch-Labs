@@ -1,4 +1,4 @@
-import { embeddingModel } from "@ai/lib/gemini";
+import { geminiEmbedding } from "@ai/lib/gemini";
 import { db, products } from "@epoch-labs/db";
 import { embed, tool } from "ai";
 import { and, eq, gte, ilike, isNotNull, lte, sql } from "drizzle-orm";
@@ -17,7 +17,7 @@ export const searchProductsTool = tool({
 	}),
 	execute: async ({ query, limit, priceMinCents, priceMaxCents, brand, categoryId }) => {
 		const { embedding } = await embed({
-			model: embeddingModel,
+			model: geminiEmbedding,
 			value: query,
 			providerOptions: {
 				google: { taskType: "RETRIEVAL_QUERY", outputDimensionality: 1536 },

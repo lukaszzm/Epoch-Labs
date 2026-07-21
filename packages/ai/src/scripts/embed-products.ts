@@ -1,4 +1,4 @@
-import { embeddingModel } from "@ai/lib/gemini";
+import { geminiEmbedding } from "@ai/lib/gemini";
 import { buildProductText } from "@ai/utils/build-product-text";
 import { db, products } from "@epoch-labs/db";
 import { embedMany } from "ai";
@@ -32,7 +32,7 @@ export async function embedProducts(): Promise<{ updated: number }> {
 		const batch = rows.slice(i, i + BATCH_SIZE);
 
 		const { embeddings } = await embedMany({
-			model: embeddingModel,
+			model: geminiEmbedding,
 			values: batch.map(buildProductText),
 			providerOptions: {
 				google: { taskType: "RETRIEVAL_DOCUMENT", outputDimensionality: 1536 },

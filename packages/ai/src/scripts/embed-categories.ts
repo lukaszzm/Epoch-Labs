@@ -1,5 +1,5 @@
 import { BATCH_SIZE } from "@ai/config/constants";
-import { embeddingModel } from "@ai/lib/gemini";
+import { geminiEmbedding } from "@ai/lib/gemini";
 import { buildCategoryText } from "@ai/utils/build-category-text";
 import { categories, db } from "@epoch-labs/db";
 import { embedMany } from "ai";
@@ -29,7 +29,7 @@ export async function embedCategories(): Promise<{ updated: number }> {
 		const batch = rows.slice(i, i + BATCH_SIZE);
 
 		const { embeddings } = await embedMany({
-			model: embeddingModel,
+			model: geminiEmbedding,
 			values: batch.map(buildCategoryText),
 			providerOptions: {
 				google: { taskType: "RETRIEVAL_DOCUMENT", outputDimensionality: 1536 },

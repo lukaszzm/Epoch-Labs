@@ -256,24 +256,6 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2
 
-  packages/gen:
-    devDependencies:
-      '@epoch-labs/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@types/node':
-        specifier: ^25.6.0
-        version: 25.6.0
-      ts-node:
-        specifier: ^10.9.2
-        version: 10.9.2(@types/node@25.6.0)(typescript@6.0.2)
-      tsx:
-        specifier: ^4.21.0
-        version: 4.21.0
-      typescript:
-        specifier: ^6.0.2
-        version: 6.0.2
-
   packages/typescript-config: {}
 
 packages:

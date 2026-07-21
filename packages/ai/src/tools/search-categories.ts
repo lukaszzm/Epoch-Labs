@@ -1,4 +1,4 @@
-import { embeddingModel } from "@ai/lib/gemini";
+import { geminiEmbedding } from "@ai/lib/gemini";
 import { categories, db } from "@epoch-labs/db";
 import { embed, tool } from "ai";
 import { and, eq, ilike, isNotNull, or, sql } from "drizzle-orm";
@@ -30,7 +30,7 @@ export const searchCategoriesTool = tool({
 		// 1. Semantic vector search
 		try {
 			const { embedding } = await embed({
-				model: embeddingModel,
+				model: geminiEmbedding,
 				value: query,
 				providerOptions: {
 					google: { taskType: "RETRIEVAL_QUERY", outputDimensionality: 1536 },

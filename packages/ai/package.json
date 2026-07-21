@@ -9,6 +9,7 @@
 	"types": "/dist/index.d.ts",
 	"exports": {
 		".": {
+			"default": "./dist/index.mjs",
 			"types": "./dist/index.d.mts",
 			"import": "./dist/index.mjs"
 		}
@@ -16,7 +17,8 @@
 	"scripts": {
 		"build": "tsdown",
 		"embed:products": "tsx src/scripts/embed-products.ts",
-		"embed:categories": "tsx src/scripts/embed-categories.ts"
+		"embed:categories": "tsx src/scripts/embed-categories.ts",
+		"generate:product-image": "tsx src/scripts/generate-product-image.ts"
 	},
 	"dependencies": {
 		"@epoch-labs/db": "workspace:*",
