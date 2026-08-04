@@ -32,7 +32,7 @@ export function CategoryMenuItem({ categoryNode }: CategoryMenuItemProps) {
 			<NavigationMenuContent>
 				<ul className="w-96">
 					<li>
-						<NavigationMenuLink asChild>
+						<NavigationMenuLink className="font-medium" asChild>
 							<Link to={AppRoute.CATEGORY} params={{ _splat: categoryPathToSplat(categoryNode.path) }}>
 								View All
 							</Link>

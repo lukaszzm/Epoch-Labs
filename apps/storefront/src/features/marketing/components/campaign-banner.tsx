@@ -16,7 +16,7 @@ export function CampaignBanner() {
 				<p className="max-w-lg text-pretty text-base text-background md:text-lg">
 					Discover cleansers, moisturizers, and serums crafted to nourish and protect your skin every day.
 				</p>
-				<Button variant="outline" size="lg" className="mt-2 text-background hover:text-background" asChild>
+				<Button size="lg" asChild>
 					<Link to={AppRoute.CATEGORY} params={{ _splat: "skincare/face-care" }}>
 						Browse Face Care Products
 					</Link>

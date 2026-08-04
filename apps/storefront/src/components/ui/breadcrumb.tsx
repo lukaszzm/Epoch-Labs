@@ -1,6 +1,6 @@
 import { CaretRightIcon, DotsThreeIcon } from "@phosphor-icons/react";
 import { Slot } from "radix-ui";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 export interface BreadcrumbProps extends React.ComponentProps<"nav"> {}
 

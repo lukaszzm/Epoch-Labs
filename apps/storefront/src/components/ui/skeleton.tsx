@@ -1,5 +1,7 @@
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
-export function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
+export interface SkeletonProps extends React.ComponentProps<"div"> {}
+
+export function Skeleton({ className, ...props }: SkeletonProps) {
 	return <div data-slot="skeleton" className={cn("animate-pulse rounded-2xl bg-muted", className)} {...props} />;
 }

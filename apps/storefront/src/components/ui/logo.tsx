@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Button, type ButtonProps } from "@/components/ui/button";
 import { AppRoute } from "@/config/app-routes";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 export interface LogoProps extends Omit<ButtonProps, "children"> {}
 
@@ -15,7 +15,7 @@ export function Logo({ className, ...props }: LogoProps) {
 			asChild
 		>
 			<Link to={AppRoute.HOME}>
-				<span className="text-primary">Epoch</span> Labs
+				<span className="text-foreground bg-primary py-0.5 px-1.5">Epoch</span> Labs
 			</Link>
 		</Button>
 	);

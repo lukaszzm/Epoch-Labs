@@ -1,12 +1,8 @@
 import * as React from "react";
-import type {
-	ControllerProps,
-	FieldPath,
-	FieldValues,
-} from "react-hook-form";
+import type { ControllerProps, FieldPath, FieldValues } from "react-hook-form";
 import { Controller, FormProvider, useFormContext } from "react-hook-form";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 export const Form = FormProvider;
 
@@ -42,8 +38,10 @@ export function useFormField() {
 	};
 }
 
-export interface FormFieldProps<TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>
-	extends ControllerProps<TFieldValues, TName> {}
+export interface FormFieldProps<
+	TFieldValues extends FieldValues = FieldValues,
+	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+> extends ControllerProps<TFieldValues, TName> {}
 
 export function FormField<
 	TFieldValues extends FieldValues = FieldValues,
@@ -62,7 +60,9 @@ type FormItemContextValue = {
 
 const FormItemContext = React.createContext<FormItemContextValue>({} as FormItemContextValue);
 
-export function FormItem({ className, ...props }: React.ComponentProps<"div">) {
+export interface FormItemProps extends React.ComponentProps<"div"> {}
+
+export function FormItem({ className, ...props }: FormItemProps) {
 	const id = React.useId();
 
 	return (
@@ -72,7 +72,7 @@ export function FormItem({ className, ...props }: React.ComponentProps<"div">) {
 	);
 }
 
-export interface FormLabelProps extends React.ComponentProps<typeof Label> {}	
+export interface FormLabelProps extends React.ComponentProps<typeof Label> {}
 
 export function FormLabel({ className, ...props }: FormLabelProps) {
 	const { error, formItemId } = useFormField();
@@ -138,4 +138,3 @@ export function FormMessage({ className, children, ...props }: FormMessageProps)
 		</p>
 	);
 }
-

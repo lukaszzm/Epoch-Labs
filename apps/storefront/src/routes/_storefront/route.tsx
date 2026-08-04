@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { AgentLink } from "@/features/agent/components/agent-link";
 
 export const Route = createFileRoute("/_storefront")({
 	component: StorefrontLayout,
@@ -14,6 +15,7 @@ function StorefrontLayout() {
 				<Outlet />
 			</main>
 			<Footer />
+			<AgentLink />
 		</div>
 	);
 }

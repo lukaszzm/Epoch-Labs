@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { AppRoute } from "@/config/app-routes";
+import { ProductImage } from "@/features/products/components/product-image";
 import type { ProductProjection } from "@/features/products/schemas/product-projection-schema";
 import { formatCurrency } from "@/utils/format-currency";
-import { ProductImage } from "./product-image";
 
 export interface ProductCardProps {
 	product: ProductProjection;
