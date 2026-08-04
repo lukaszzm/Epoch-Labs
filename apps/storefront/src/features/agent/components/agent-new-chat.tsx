@@ -19,7 +19,9 @@ export function AgentNewChat({ onConfirm }: AgentNewChatProps) {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
-				<Button size="lg">New Chat</Button>
+				<Button variant="secondary" size="lg">
+					New Chat
+				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="dark">
 				<AlertDialogHeader>

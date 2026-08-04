@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AgentRouteRouteImport } from './routes/agent/route'
 import { Route as StorefrontRouteRouteImport } from './routes/_storefront/route'
 import { Route as AgentIndexRouteImport } from './routes/agent/index'
 import { Route as StorefrontIndexRouteImport } from './routes/_storefront/index'
@@ -19,19 +18,14 @@ import { Route as StorefrontProductsSlugRouteImport } from './routes/_storefront
 import { Route as StorefrontOrderConfirmationIdRouteImport } from './routes/_storefront/order-confirmation/$id'
 import { Route as StorefrontCategoriesSplatRouteImport } from './routes/_storefront/categories/$'
 
-const AgentRouteRoute = AgentRouteRouteImport.update({
-  id: '/agent',
-  path: '/agent',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const StorefrontRouteRoute = StorefrontRouteRouteImport.update({
   id: '/_storefront',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AgentIndexRoute = AgentIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => AgentRouteRoute,
+  id: '/agent/',
+  path: '/agent/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const StorefrontIndexRoute = StorefrontIndexRouteImport.update({
   id: '/',
@@ -68,7 +62,6 @@ const StorefrontCategoriesSplatRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof StorefrontIndexRoute
-  '/agent': typeof AgentRouteRouteWithChildren
   '/checkout': typeof StorefrontCheckoutRouteRouteWithChildren
   '/agent/': typeof AgentIndexRoute
   '/categories/$': typeof StorefrontCategoriesSplatRoute
@@ -87,7 +80,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_storefront': typeof StorefrontRouteRouteWithChildren
-  '/agent': typeof AgentRouteRouteWithChildren
   '/_storefront/checkout': typeof StorefrontCheckoutRouteRouteWithChildren
   '/_storefront/': typeof StorefrontIndexRoute
   '/agent/': typeof AgentIndexRoute
@@ -100,7 +92,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/agent'
     | '/checkout'
     | '/agent/'
     | '/categories/$'
@@ -118,7 +109,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_storefront'
-    | '/agent'
     | '/_storefront/checkout'
     | '/_storefront/'
     | '/agent/'
@@ -130,18 +120,11 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   StorefrontRouteRoute: typeof StorefrontRouteRouteWithChildren
-  AgentRouteRoute: typeof AgentRouteRouteWithChildren
+  AgentIndexRoute: typeof AgentIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/agent': {
-      id: '/agent'
-      path: '/agent'
-      fullPath: '/agent'
-      preLoaderRoute: typeof AgentRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/_storefront': {
       id: '/_storefront'
       path: ''
@@ -151,10 +134,10 @@ declare module '@tanstack/react-router' {
     }
     '/agent/': {
       id: '/agent/'
-      path: '/'
+      path: '/agent'
       fullPath: '/agent/'
       preLoaderRoute: typeof AgentIndexRouteImport
-      parentRoute: typeof AgentRouteRoute
+      parentRoute: typeof rootRouteImport
     }
     '/_storefront/': {
       id: '/_storefront/'
@@ -235,21 +218,9 @@ const StorefrontRouteRouteWithChildren = StorefrontRouteRoute._addFileChildren(
   StorefrontRouteRouteChildren,
 )
 
-interface AgentRouteRouteChildren {
-  AgentIndexRoute: typeof AgentIndexRoute
-}
-
-const AgentRouteRouteChildren: AgentRouteRouteChildren = {
-  AgentIndexRoute: AgentIndexRoute,
-}
-
-const AgentRouteRouteWithChildren = AgentRouteRoute._addFileChildren(
-  AgentRouteRouteChildren,
-)
-
 const rootRouteChildren: RootRouteChildren = {
   StorefrontRouteRoute: StorefrontRouteRouteWithChildren,
-  AgentRouteRoute: AgentRouteRouteWithChildren,
+  AgentIndexRoute: AgentIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

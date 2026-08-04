@@ -5,6 +5,7 @@ export const ApiRoute = {
 	CATEGORIES: "/api/categories",
 	CART: "/api/cart",
 	CHECKOUT: "/api/checkout",
+	AGENT_CHAT: "/api/agent/chat",
 } as const satisfies Record<string, `/api/${string}`>;
 
 export type ApiRoute = (typeof ApiRoute)[keyof typeof ApiRoute];
