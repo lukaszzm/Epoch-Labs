@@ -1,19 +1,21 @@
 import { Bubble, BubbleContent, BubbleGroup } from "@/components/ui/bubble";
-import { Skeleton } from "@/components/ui/skeleton";
-import type { Message } from "@/features/agent/types";
+import type { TextMessage } from "@/features/agent/types";
 
 interface AgentChatTextMessageProps {
-	message: Message;
-	isStreaming?: boolean;
+	message: TextMessage;
 }
 
-export function AgentChatTextMessage({ message, isStreaming }: AgentChatTextMessageProps) {
+export function AgentChatTextMessage({ message }: AgentChatTextMessageProps) {
+	const isUserMessage = message.role === "user";
+
+	if (!message.content) {
+		return null;
+	}
+
 	return (
-		<BubbleGroup key={message.id} data-align={message.role === "user" ? "end" : "start"}>
-			<Bubble variant={message.role === "user" ? "default" : "muted"} align={message.role === "user" ? "end" : "start"}>
-				<BubbleContent>
-					{message.content || (isStreaming && message.role === "assistant" ? <Skeleton className="h-4 w-32" /> : null)}
-				</BubbleContent>
+		<BubbleGroup key={message.id} data-align={isUserMessage ? "end" : "start"}>
+			<Bubble variant={isUserMessage ? "default" : "muted"} align={isUserMessage ? "end" : "start"}>
+				<BubbleContent>{message.content}</BubbleContent>
 			</Bubble>
 		</BubbleGroup>
 	);

@@ -1,18 +1,21 @@
 import { useCallback, useRef, useState } from "react";
 import { streamAgentChat } from "@/features/agent/api/stream-agent-chat";
-import type { Message, ToolActivity } from "@/features/agent/types";
+import type { CartData, Message, ToolActivity } from "@/features/agent/types";
 import { getOrCreateSessionId } from "@/features/cart/utils/get-or-create-session";
 
 export function useAgentChat() {
 	const [messages, setMessages] = useState<Message[]>([]);
-	const [activeTools, setActiveTools] = useState<ToolActivity[]>([]);
+	const [activeTool, setActiveTool] = useState<ToolActivity | null>(null);
 	const [isStreaming, setIsStreaming] = useState(false);
 	const [conversationId, setConversationId] = useState<string | null>(null);
 	const abortRef = useRef<AbortController | null>(null);
+	const toolNameQueueRef = useRef<string[]>([]);
 
 	const sendMessage = useCallback(
 		async (userInput: string) => {
-			if (isStreaming || !userInput.trim()) return;
+			if (isStreaming || !userInput.trim()) {
+				return;
+			}
 
 			const trimmed = userInput.trim();
 			const assistantId = crypto.randomUUID();
@@ -23,7 +26,8 @@ export function useAgentChat() {
 				{ id: assistantId, role: "assistant", content: "" },
 			]);
 			setIsStreaming(true);
-			setActiveTools([]);
+			setActiveTool(null);
+			toolNameQueueRef.current = [];
 
 			abortRef.current = new AbortController();
 
@@ -38,23 +42,35 @@ export function useAgentChat() {
 				for await (const event of stream) {
 					if (event.type === "text") {
 						setMessages((prev) =>
-							prev.map((m) => (m.id === assistantId ? { ...m, content: m.content + event.chunk } : m)),
+							prev.map((m) =>
+								m.id === assistantId && m.role === "assistant" ? { ...m, content: m.content + event.chunk } : m,
+							),
 						);
 					} else if (event.type === "tool_call") {
-						setActiveTools((prev) => [...prev, { id: crypto.randomUUID(), name: event.name }]);
+						toolNameQueueRef.current.push(event.name);
+						setActiveTool({ id: crypto.randomUUID(), name: event.name });
 					} else if (event.type === "tool_result") {
-						// Remove the oldest active tool when its result arrives
-						setActiveTools((prev) => prev.slice(1));
+						const toolName = toolNameQueueRef.current.shift();
+						setActiveTool(null);
+						if (toolName === "getCart") {
+							const data = JSON.parse(event.content) as CartData;
+							setMessages((prev) => [
+								...prev,
+								{ id: crypto.randomUUID(), role: "tool_result", toolName: "getCart", data },
+							]);
+						}
 					} else if (event.type === "done") {
 						setConversationId(event.conversationId);
-						setActiveTools([]);
+						setActiveTool(null);
 					}
 				}
 			} catch (err) {
 				if ((err as Error).name !== "AbortError") {
 					setMessages((prev) =>
 						prev.map((m) =>
-							m.id === assistantId ? { ...m, content: m.content || "Something went wrong. Please try again." } : m,
+							m.id === assistantId && m.role === "assistant"
+								? { ...m, content: m.content || "Something went wrong. Please try again." }
+								: m,
 						),
 					);
 				}
@@ -68,11 +84,12 @@ export function useAgentChat() {
 
 	const reset = useCallback(() => {
 		abortRef.current?.abort();
+		toolNameQueueRef.current = [];
 		setMessages([]);
-		setActiveTools([]);
+		setActiveTool(null);
 		setIsStreaming(false);
 		setConversationId(null);
 	}, []);
 
-	return { messages, activeTools, isStreaming, conversationId, sendMessage, reset };
+	return { messages, activeTool, isStreaming, conversationId, sendMessage, reset };
 }

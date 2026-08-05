@@ -1,6 +1,6 @@
 import { ApiRoute } from "@/config/api-routes";
 import type { SseEvent } from "@/features/agent/types";
-import { parseSseEvent } from "@/features/agent/utils/parseSseEvent";
+import { parseSseEvent } from "@/features/agent/utils/parse-sse-event";
 import { buildApiUrl } from "@/utils/build-api-url";
 
 interface StreamAgentChatParams {
