@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { cartItems, carts, db, productVariants } from "@epoch-labs/db";
+import { cartItems, carts, db, products, productVariants } from "@epoch-labs/db";
 import { tool } from "ai";
 import { and, eq, sql } from "drizzle-orm";
 import z from "zod";
@@ -35,10 +35,13 @@ export function buildAddToCartTool(sessionId: string) {
 					priceInCents: productVariants.priceInCents,
 					stockQuantity: productVariants.stockQuantity,
 					isAvailable: productVariants.isAvailable,
-					name: productVariants.name,
+					variantName: productVariants.name,
 					sku: productVariants.sku,
+					productName: products.name,
+					currency: products.currency,
 				})
 				.from(productVariants)
+				.innerJoin(products, eq(productVariants.productId, products.id))
 				.where(eq(productVariants.id, productVariantId))
 				.limit(1);
 
@@ -76,7 +79,15 @@ export function buildAddToCartTool(sessionId: string) {
 			return {
 				success: true,
 				cartId: cart.id,
-				added: { variantId: productVariantId, sku: variant.sku, name: variant.name, quantity },
+				added: {
+					variantId: productVariantId,
+					sku: variant.sku,
+					variantName: variant.variantName,
+					productName: variant.productName,
+					quantity,
+					priceInCents: variant.priceInCents,
+					currency: variant.currency,
+				},
 			};
 		},
 	});

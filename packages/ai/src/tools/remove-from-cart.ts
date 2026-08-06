@@ -1,4 +1,4 @@
-import { cartItems, carts, db } from "@epoch-labs/db";
+import { cartItems, carts, db, products, productVariants } from "@epoch-labs/db";
 import { tool } from "ai";
 import { and, eq, sql } from "drizzle-orm";
 import z from "zod";
@@ -28,8 +28,16 @@ export function buildRemoveFromCartTool(sessionId: string) {
 			}
 
 			const [existingItem] = await db
-				.select({ id: cartItems.id, quantity: cartItems.quantity })
+				.select({
+					id: cartItems.id,
+					quantity: cartItems.quantity,
+					variantName: productVariants.name,
+					productName: products.name,
+					currency: products.currency,
+				})
 				.from(cartItems)
+				.innerJoin(productVariants, eq(cartItems.productVariantId, productVariants.id))
+				.innerJoin(products, eq(productVariants.productId, products.id))
 				.where(and(eq(cartItems.cartId, cart.id), eq(cartItems.productVariantId, productVariantId)))
 				.limit(1);
 
@@ -47,7 +55,14 @@ export function buildRemoveFromCartTool(sessionId: string) {
 
 				await db.update(carts).set({ updatedAt: new Date() }).where(eq(carts.id, cart.id));
 
-				return { success: true, action: "removed", productVariantId };
+				return {
+					success: true,
+					action: "removed" as const,
+					productVariantId,
+					variantName: existingItem.variantName,
+					productName: existingItem.productName,
+					currency: existingItem.currency,
+				};
 			}
 
 			await db
@@ -57,7 +72,15 @@ export function buildRemoveFromCartTool(sessionId: string) {
 
 			await db.update(carts).set({ updatedAt: new Date() }).where(eq(carts.id, cart.id));
 
-			return { success: true, action: "reduced", productVariantId, newQuantity };
+			return {
+				success: true,
+				action: "reduced" as const,
+				productVariantId,
+				newQuantity,
+				variantName: existingItem.variantName,
+				productName: existingItem.productName,
+				currency: existingItem.currency,
+			};
 		},
 	});
 }
