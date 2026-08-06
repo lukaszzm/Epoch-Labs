@@ -1,6 +1,6 @@
 import { Bubble, BubbleContent, BubbleGroup } from "@/components/ui/bubble";
 
-export function AgentChatCartResultEmpty() {
+export function AgentChatGetCartResultEmpty() {
 	return (
 		<BubbleGroup>
 			<Bubble variant="muted" align="start">

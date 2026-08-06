@@ -1,20 +1,20 @@
 import { Bubble, BubbleContent, BubbleGroup } from "@/components/ui/bubble";
-import { AgentChatCartResultEmpty } from "@/features/agent/components/agent-chat-cart-result-empty";
-import { AgentChatCartResultItem } from "@/features/agent/components/agent-chat-cart-result-item";
-import type { CartToolResult } from "@/features/agent/types";
+import { AgentChatGetCartResultEmpty } from "@/features/agent/components/agent-chat-get-cart-result-empty";
+import { AgentChatGetCartResultItem } from "@/features/agent/components/agent-chat-get-cart-result-item";
+import type { GetCartToolResult } from "@/features/agent/types";
 import { formatCurrency } from "@/utils/format-currency";
 
-interface AgentChatCartResultProps {
-	message: CartToolResult;
+interface AgentChatGetCartResultProps {
+	message: GetCartToolResult;
 }
 
-export function AgentChatCartResult({
+export function AgentChatGetCartResult({
 	message: {
 		data: { items, itemCount, totalInCents, currency },
 	},
-}: AgentChatCartResultProps) {
+}: AgentChatGetCartResultProps) {
 	if (items.length === 0) {
-		return <AgentChatCartResultEmpty />;
+		return <AgentChatGetCartResultEmpty />;
 	}
 
 	return (
@@ -26,7 +26,7 @@ export function AgentChatCartResult({
 					</span>
 					<ul className="flex flex-col gap-1.5">
 						{items.map((item) => (
-							<AgentChatCartResultItem key={item.id} item={item} currency={currency} />
+							<AgentChatGetCartResultItem key={item.id} item={item} currency={currency} />
 						))}
 					</ul>
 					<div className="border-t border-border pt-2 flex justify-between text-sm font-medium">

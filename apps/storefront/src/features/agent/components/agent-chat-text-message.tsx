@@ -1,3 +1,4 @@
+import { Markdown } from "@tanstack/markdown/react";
 import { Bubble, BubbleContent, BubbleGroup } from "@/components/ui/bubble";
 import type { TextMessage } from "@/features/agent/types";
 
@@ -15,7 +16,9 @@ export function AgentChatTextMessage({ message }: AgentChatTextMessageProps) {
 	return (
 		<BubbleGroup key={message.id} data-align={isUserMessage ? "end" : "start"}>
 			<Bubble variant={isUserMessage ? "default" : "muted"} align={isUserMessage ? "end" : "start"}>
-				<BubbleContent>{message.content}</BubbleContent>
+				<BubbleContent>
+					<Markdown>{message.content}</Markdown>
+				</BubbleContent>
 			</Bubble>
 		</BubbleGroup>
 	);

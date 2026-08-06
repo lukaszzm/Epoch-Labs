@@ -3,12 +3,12 @@ import { AppRoute } from "@/config/app-routes";
 import type { CartItem } from "@/features/agent/types";
 import { formatCurrency } from "@/utils/format-currency";
 
-interface AgentChatCartResultItemProps {
+interface AgentChatGetCartResultItemProps {
 	item: CartItem;
 	currency: string;
 }
 
-export function AgentChatCartResultItem({ item, currency }: AgentChatCartResultItemProps) {
+export function AgentChatGetCartResultItem({ item, currency }: AgentChatGetCartResultItemProps) {
 	return (
 		<li key={item.id} className="flex items-start justify-between gap-4 text-sm">
 			<Link
