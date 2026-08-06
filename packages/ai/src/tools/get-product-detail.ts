@@ -10,7 +10,25 @@ export const getProductDetailTool = tool({
 		slug: z.string().describe("Product slug (URL-safe identifier, e.g. 'la-roche-posay-toleriane-cleanser')"),
 	}),
 	execute: async ({ slug }) => {
-		const [product] = await db.select().from(products).where(eq(products.slug, slug)).limit(1);
+		const [product] = await db
+			.select({
+				id: products.id,
+				name: products.name,
+				slug: products.slug,
+				brand: products.brand,
+				shortDescription: products.shortDescription,
+				agentSummary: products.agentSummary,
+				categoryId: products.categoryId,
+				tags: products.tags,
+				attributes: products.attributes,
+				lowestPriceInCents: products.lowestPriceInCents,
+				currency: products.currency,
+				averageRating: products.averageRating,
+				reviewCount: products.reviewCount,
+			})
+			.from(products)
+			.where(eq(products.slug, slug))
+			.limit(1);
 
 		if (!product) {
 			return { found: false, product: null };
@@ -31,27 +49,6 @@ export const getProductDetailTool = tool({
 			.where(eq(productVariants.productId, product.id))
 			.orderBy(productVariants.position);
 
-		return {
-			found: true,
-			product: {
-				id: product.id,
-				name: product.name,
-				slug: product.slug,
-				brand: product.brand,
-				shortDescription: product.shortDescription,
-				description: product.description,
-				agentSummary: product.agentSummary,
-				categoryId: product.categoryId,
-				images: product.images,
-				tags: product.tags,
-				attributes: product.attributes,
-				lowestPriceInCents: product.lowestPriceInCents,
-				currency: product.currency,
-				averageRating: product.averageRating,
-				reviewCount: product.reviewCount,
-				isFeatured: product.isFeatured,
-				variants,
-			},
-		};
+		return { found: true, product: { ...product, variants } };
 	},
 });

@@ -11,10 +11,8 @@ const SELECTED_FIELDS = {
 	path: categories.path,
 	level: categories.level,
 	isLeaf: categories.isLeaf,
-	imageUrl: categories.imageUrl,
 	breadcrumb: categories.breadcrumb,
 	agentHints: categories.agentHints,
-	description: categories.description,
 };
 
 export const searchCategoriesTool = tool({

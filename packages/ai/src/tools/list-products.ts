@@ -46,10 +46,7 @@ export const listProductsTool = tool({
 					brand: products.brand,
 					shortDescription: products.shortDescription,
 					agentSummary: products.agentSummary,
-					isFeatured: products.isFeatured,
-					images: products.images,
-					tags: products.tags,
-					attributes: products.attributes,
+
 					lowestPriceInCents: products.lowestPriceInCents,
 					currency: products.currency,
 					averageRating: products.averageRating,

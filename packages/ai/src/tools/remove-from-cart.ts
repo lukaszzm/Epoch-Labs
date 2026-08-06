@@ -6,7 +6,7 @@ import z from "zod";
 export function buildRemoveFromCartTool(sessionId: string) {
 	return tool({
 		description:
-			"Remove a product variant from the cart, or reduce its quantity. If the resulting quantity would be zero or less, the item is deleted entirely.",
+			"Remove a product variant from the cart, or reduce its quantity. If the resulting quantity would be zero or less, the item is deleted entirely. Call getCart first to obtain the productVariantId of the item the customer wants to remove.",
 		inputSchema: z.object({
 			productVariantId: z.string().describe("The variant ID to remove or reduce"),
 			quantity: z

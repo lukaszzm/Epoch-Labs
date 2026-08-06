@@ -36,7 +36,6 @@ export function buildGetCartTool(sessionId: string) {
 						name: products.name,
 						brand: products.brand,
 						slug: products.slug,
-						images: products.images,
 						currency: products.currency,
 					},
 				})
