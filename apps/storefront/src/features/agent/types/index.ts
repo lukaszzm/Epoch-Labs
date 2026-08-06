@@ -104,11 +104,35 @@ export interface StartCheckoutToolResult {
 	order: OrderData;
 }
 
+export interface AddToCartToolResult {
+	id: string;
+	role: "tool_result";
+	toolName: "addToCart";
+	variantName: string;
+	productName: string;
+	quantity: number;
+	priceInCents: number;
+	currency: string;
+}
+
+export interface RemoveFromCartToolResult {
+	id: string;
+	role: "tool_result";
+	toolName: "removeFromCart";
+	action: "removed" | "reduced";
+	variantName: string;
+	productName: string;
+	currency: string;
+	newQuantity?: number;
+}
+
 export type ToolResult =
 	| GetCartToolResult
 	| ListProductsToolResult
 	| GetProductDetailToolResult
-	| StartCheckoutToolResult;
+	| StartCheckoutToolResult
+	| AddToCartToolResult
+	| RemoveFromCartToolResult;
 
 export type Message = TextMessage | ToolResult;
 

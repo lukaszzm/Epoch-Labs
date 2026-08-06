@@ -104,6 +104,50 @@ export function useAgentChat() {
 									order,
 								});
 							}
+						} else if (toolName === "addToCart") {
+							const { success, added } = JSON.parse(event.content) as {
+								success: boolean;
+								added?: {
+									variantName: string;
+									productName: string;
+									quantity: number;
+									priceInCents: number;
+									currency: string;
+								};
+							};
+							if (success && added) {
+								toolResultQueueRef.current.push({
+									id: crypto.randomUUID(),
+									role: "tool_result",
+									toolName: "addToCart",
+									variantName: added.variantName,
+									productName: added.productName,
+									quantity: added.quantity,
+									priceInCents: added.priceInCents,
+									currency: added.currency,
+								});
+							}
+						} else if (toolName === "removeFromCart") {
+							const result = JSON.parse(event.content) as {
+								success: boolean;
+								action?: "removed" | "reduced";
+								variantName?: string;
+								productName?: string;
+								currency?: string;
+								newQuantity?: number;
+							};
+							if (result.success && result.action && result.variantName && result.productName) {
+								toolResultQueueRef.current.push({
+									id: crypto.randomUUID(),
+									role: "tool_result",
+									toolName: "removeFromCart",
+									action: result.action,
+									variantName: result.variantName,
+									productName: result.productName,
+									currency: result.currency ?? "USD",
+									newQuantity: result.newQuantity,
+								});
+							}
 						}
 					} else if (event.type === "done") {
 						setConversationId(event.conversationId);

@@ -37,9 +37,17 @@ export function AgentChatProductDetailResult({ message: { product } }: AgentChat
 							{availableVariants.map((variant) => (
 								<li key={variant.id} className="flex items-baseline justify-between gap-4 text-sm">
 									<span className="text-muted-foreground">{variant.name}</span>
-									<span className="tabular-nums font-medium">
-										{formatCurrency(variant.priceInCents, { currency: product.currency })}
-									</span>
+									<div className="flex items-baseline gap-1.5 shrink-0">
+										{variant.compareAtPriceInCents != null &&
+											variant.compareAtPriceInCents > variant.priceInCents && (
+												<span className="tabular-nums text-xs text-muted-foreground line-through">
+													{formatCurrency(variant.compareAtPriceInCents, { currency: product.currency })}
+												</span>
+											)}
+										<span className="tabular-nums font-medium">
+											{formatCurrency(variant.priceInCents, { currency: product.currency })}
+										</span>
+									</div>
 								</li>
 							))}
 						</ul>
