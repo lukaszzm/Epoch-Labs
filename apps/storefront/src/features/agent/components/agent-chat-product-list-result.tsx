@@ -10,7 +10,7 @@ interface AgentChatProductListResultProps {
 
 export function AgentChatProductListResult({ message: { products } }: AgentChatProductListResultProps) {
 	if (products.length === 0) {
-		return null;
+		return null; // Agent will respond in natural language if no products are found, so we don't need to render anything here.
 	}
 
 	return (

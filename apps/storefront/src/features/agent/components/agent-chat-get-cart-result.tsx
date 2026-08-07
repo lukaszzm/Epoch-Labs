@@ -1,5 +1,4 @@
 import { Bubble, BubbleContent, BubbleGroup } from "@/components/ui/bubble";
-import { AgentChatGetCartResultEmpty } from "@/features/agent/components/agent-chat-get-cart-result-empty";
 import { AgentChatGetCartResultItem } from "@/features/agent/components/agent-chat-get-cart-result-item";
 import type { GetCartToolResult } from "@/features/agent/types";
 import { formatCurrency } from "@/utils/format-currency";
@@ -14,7 +13,7 @@ export function AgentChatGetCartResult({
 	},
 }: AgentChatGetCartResultProps) {
 	if (items.length === 0) {
-		return <AgentChatGetCartResultEmpty />;
+		return null; // Agent will respond in natural language if the cart is empty, so we don't need to render anything here.
 	}
 
 	return (

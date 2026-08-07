@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Bubble, BubbleContent, BubbleGroup } from "@/components/ui/bubble";
 import { AppRoute } from "@/config/app-routes";
 import type { GetProductDetailToolResult } from "@/features/agent/types";
+import { formatAttributeKey } from "@/features/agent/utils/format-attribute-key";
 import { formatCurrency } from "@/utils/format-currency";
 
 interface AgentChatProductDetailResultProps {
@@ -22,7 +23,7 @@ export function AgentChatProductDetailResult({ message: { product } }: AgentChat
 	return (
 		<BubbleGroup>
 			<Bubble variant="muted" align="start">
-				<BubbleContent className="flex flex-col gap-3 min-w-56 max-w-md">
+				<BubbleContent className="flex flex-col gap-3 min-w-56 max-w-lg">
 					<div className="flex flex-col gap-0.5">
 						<span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{product.brand}</span>
 						<Link
@@ -40,7 +41,6 @@ export function AgentChatProductDetailResult({ message: { product } }: AgentChat
 							</p>
 						)}
 					</div>
-
 					{product.reviewCount > 0 && (
 						<div className="flex items-center gap-1.5">
 							<span className="text-xs text-amber-500">★ {product.averageRating.toFixed(1)}</span>
@@ -49,24 +49,21 @@ export function AgentChatProductDetailResult({ message: { product } }: AgentChat
 							</span>
 						</div>
 					)}
-
 					{attributeEntries.length > 0 && (
 						<dl className="grid grid-cols-2 gap-x-3 gap-y-0.5 border-t border-border pt-2">
 							{attributeEntries.map(([key, value]) => (
 								<div key={key} className="contents">
-									<dt className="text-xs text-muted-foreground capitalize">{key}</dt>
-									<dd className="text-xs font-medium truncate">
-										{Array.isArray(value) ? value.join(", ") : String(value)}
-									</dd>
+									<dt className="text-xs text-muted-foreground">{formatAttributeKey(key)}</dt>
+									<dd className="text-xs font-medium">{Array.isArray(value) ? value.join(", ") : String(value)}</dd>
 								</div>
 							))}
 						</dl>
 					)}
 
 					{tags.length > 0 && (
-						<div className="flex flex-wrap gap-1">
+						<div className="flex flex-wrap gap-2">
 							{tags.map((tag) => (
-								<Badge key={tag} variant="secondary">
+								<Badge key={tag} className="border-primary bg-primary/5 text-primary">
 									{tag}
 								</Badge>
 							))}
