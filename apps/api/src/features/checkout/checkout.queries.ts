@@ -13,7 +13,10 @@ import { and, eq } from "drizzle-orm";
 
 export async function getOrderById(id: string) {
 	const [order] = await db.select().from(orders).where(eq(orders.id, id)).limit(1);
-	return order ?? null;
+	if (!order) return null;
+
+	const items = await db.select().from(orderItems).where(eq(orderItems.orderId, id));
+	return { ...order, items };
 }
 
 export async function convertCartToOrder(sessionId: string, shippingAddress?: ShippingAddress, currency = "USD") {
