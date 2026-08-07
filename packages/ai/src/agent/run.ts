@@ -5,11 +5,10 @@ import type { Message } from "@epoch-labs/db";
 import type { ModelMessage } from "ai";
 import { stepCountIs, streamText } from "ai";
 
-
 export type SseEvent =
 	| { type: "text"; chunk: string }
-	| { type: "tool_call"; name: string; input: Record<string, unknown> }
-	| { type: "tool_result"; toolCallId: string; content: string }
+	| { type: "tool_call"; toolCallId: string; toolName: string; input: Record<string, unknown> }
+	| { type: "tool_result"; toolCallId: string; toolName: string; content: string }
 	| { type: "done"; conversationId: string };
 
 /**
@@ -72,7 +71,8 @@ export async function* runAgent(params: {
 			case "tool-call":
 				yield {
 					type: "tool_call",
-					name: part.toolName,
+					toolCallId: part.toolCallId,
+					toolName: part.toolName,
 					input: part.input as Record<string, unknown>,
 				};
 				break;
@@ -81,6 +81,7 @@ export async function* runAgent(params: {
 				yield {
 					type: "tool_result",
 					toolCallId: part.toolCallId,
+					toolName: part.toolName,
 					content: JSON.stringify(part.output),
 				};
 				break;
