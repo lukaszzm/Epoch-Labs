@@ -53,6 +53,10 @@ export function buildAddToCartTool(sessionId: string) {
 				return { success: false, error: "This variant is currently unavailable." };
 			}
 
+			if (variant.stockQuantity !== null && variant.stockQuantity <= 0) {
+				return { success: false, error: "This variant is currently out of stock." };
+			}
+
 			const cart = await getOrCreateCart(sessionId);
 
 			if (!cart) {

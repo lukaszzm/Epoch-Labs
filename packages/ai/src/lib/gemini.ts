@@ -8,9 +8,9 @@ const ai = createGoogleGenerativeAI({
 });
 
 /**
- * Gemini 3 Pro — primary language model for agent reasoning and tool calling.
+ * Gemini 3.1 Flash Lite — primary language model for agent reasoning and tool calling.
  */
-export const geminiLanguage: LanguageModel = ai("gemini-3.1-flash-lite"); // Currently, changed to flash-lite for cost efficiency
+export const geminiLanguage: LanguageModel = ai("gemini-3.1-flash-lite");
 
 /**
  * Gemini embedding-001 — primary embedding model for semantic search and matching.

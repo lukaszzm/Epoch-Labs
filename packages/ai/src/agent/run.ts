@@ -1,4 +1,4 @@
-import { SYSTEM_PROMPT } from "@ai/agent/system-prompt";
+import { getSystemPrompt } from "@ai/agent/system-prompt";
 import { buildToolsRegistry } from "@ai/agent/tools-registry";
 import { geminiLanguage } from "@ai/lib/gemini";
 import type { Message } from "@epoch-labs/db";
@@ -9,6 +9,7 @@ export type SseEvent =
 	| { type: "text"; chunk: string }
 	| { type: "tool_call"; toolCallId: string; toolName: string; input: Record<string, unknown> }
 	| { type: "tool_result"; toolCallId: string; toolName: string; content: string }
+	| { type: "error"; message: string }
 	| { type: "done"; conversationId: string };
 
 /**
@@ -54,10 +55,11 @@ export async function* runAgent(params: {
 
 	const result = streamText({
 		model: geminiLanguage,
-		system: SYSTEM_PROMPT,
+		system: getSystemPrompt(),
 		messages,
 		tools,
-		stopWhen: stepCountIs(5),
+		maxOutputTokens: 2048,
+		stopWhen: stepCountIs(10),
 	});
 
 	for await (const part of result.fullStream) {
@@ -87,7 +89,8 @@ export async function* runAgent(params: {
 				break;
 
 			case "error":
-				throw part.error;
+				yield { type: "error", message: String(part.error) };
+				return;
 
 			// step-start, step-finish, finish, reasoning, etc. are intentionally ignored
 		}

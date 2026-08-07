@@ -1,6 +1,6 @@
 import { db, products, productVariants } from "@epoch-labs/db";
 import { tool } from "ai";
-import { eq } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
 import z from "zod";
 
 export const getProductDetailTool = tool({
@@ -27,7 +27,7 @@ export const getProductDetailTool = tool({
 				reviewCount: products.reviewCount,
 			})
 			.from(products)
-			.where(eq(products.slug, slug))
+.where(and(eq(products.slug, slug), eq(products.status, "active")))
 			.limit(1);
 
 		if (!product) {

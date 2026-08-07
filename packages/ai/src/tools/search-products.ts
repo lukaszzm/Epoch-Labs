@@ -6,7 +6,7 @@ import z from "zod";
 
 export const searchProductsTool = tool({
 	description:
-		"Search the product catalog using natural language. Returns the most semantically relevant active products, including an agentSummary field with store-authored descriptions for use in text responses. Use optional filters to narrow by price, brand, or category.",
+		"Search the product catalog using natural language. Returns the most semantically relevant active products, including an `agentSummary` field for text responses and `averageRating`/`reviewCount` for quality signals. Use optional filters to narrow by price, brand, or category.",
 	inputSchema: z.object({
 		query: z.string().describe("Natural language search query (e.g. 'gentle face wash for dry skin')"),
 		limit: z.number().int().min(1).max(20).default(8).optional().describe("Max results to return"),

@@ -17,7 +17,7 @@ const SELECTED_FIELDS = {
 
 export const searchCategoriesTool = tool({
 	description:
-		"Find product categories by semantic meaning or keyword. Returns relevant categories with breadcrumb trails and agent hints. Use the returned category IDs to filter subsequent listProducts or searchProducts calls.",
+		"Find product categories by semantic meaning or keyword. Returns relevant categories with breadcrumb trails and agent hints. Read the `agentHints` field on each result to understand the category's scope before choosing which ID to use as a filter.",
 	inputSchema: z.object({
 		query: z.string().describe("Natural language query (e.g. 'sun protection for face', 'anti-aging serum')"),
 		limit: z.number().int().min(1).max(10).default(5).optional().describe("Max number of categories to return"),
