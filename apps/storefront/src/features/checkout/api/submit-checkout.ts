@@ -1,6 +1,6 @@
 import { ApiRoute } from "@/config/api-routes";
-import { type CheckoutOrder, checkoutOrderSchema } from "@/features/checkout/schemas/checkout-order-schema";
 import type { CheckoutFormValues } from "@/features/checkout/schemas/checkout-schema";
+import { type CheckoutOrder, checkoutOrderSchema } from "@/features/checkout/schemas/order-schema";
 import { buildApiUrl } from "@/utils/build-api-url";
 
 export async function submitCheckout(

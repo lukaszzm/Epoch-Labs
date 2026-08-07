@@ -16,9 +16,9 @@ function OrderConfirmationPage() {
 		return <OrderConfirmationLoading />;
 	}
 
-	if (isError || order === null) {
-		<OrderConfirmationNotFound />;
+	if (isError || !order) {
+		return <OrderConfirmationNotFound />;
 	}
 
-	return <OrderConfirmation />;
+	return <OrderConfirmation order={order} />;
 }
