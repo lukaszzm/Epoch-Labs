@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AgentChatInput } from "@/features/agent/components/agent-chat-input";
 import { AgentChatMessages } from "@/features/agent/components/agent-chat-messages";
 import { AgentHeader } from "@/features/agent/components/agent-header";
-import { useAgentChat } from "@/features/agent/hooks/use-agent-chat";
+import { useChat } from "@/features/agent/hooks/use-chat";
 import { useScroll } from "@/features/agent/hooks/use-scroll";
 
 export const Route = createFileRoute("/agent/")({
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/agent/")({
 });
 
 function AgentPage() {
-	const { messages, activeTool, isStreaming, sendMessage, reset } = useAgentChat();
+	const { messages, activeTool, isStreaming, sendMessage, reset } = useChat();
 	const bottomRef = useScroll([messages, activeTool]);
 
 	return (

@@ -7,13 +7,15 @@ export const sseTextEventSchema = z.object({
 
 export const sseToolCallEventSchema = z.object({
 	type: z.literal("tool_call"),
-	name: z.string(),
+	toolCallId: z.string(),
+	toolName: z.string(),
 	input: z.record(z.string(), z.unknown()),
 });
 
 export const sseToolResultEventSchema = z.object({
 	type: z.literal("tool_result"),
 	toolCallId: z.string(),
+	toolName: z.string(),
 	content: z.string(),
 });
 
