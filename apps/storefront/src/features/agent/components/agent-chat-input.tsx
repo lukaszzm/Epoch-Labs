@@ -29,7 +29,7 @@ export function AgentChatInput({ isStreaming, onSend }: AgentChatInputProps) {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="flex items-center gap-2 p-4">
+		<form onSubmit={handleSubmit(onSubmit)} className="flex items-center">
 			<Input
 				{...register("message")}
 				placeholder="Ask me anything…"

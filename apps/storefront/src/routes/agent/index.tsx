@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AgentChatInput } from "@/features/agent/components/agent-chat-input";
 import { AgentChatMessages } from "@/features/agent/components/agent-chat-messages";
+import { AgentDisclaimer } from "@/features/agent/components/agent-disclaimer";
 import { AgentHeader } from "@/features/agent/components/agent-header";
 import { useChat } from "@/features/agent/hooks/use-chat";
 import { useScroll } from "@/features/agent/hooks/use-scroll";
@@ -19,7 +20,10 @@ function AgentPage() {
 			<main className="flex-1 h-full w-full max-w-4xl mx-auto flex flex-col">
 				<AgentChatMessages messages={messages} activeTool={activeTool} isStreaming={isStreaming} />
 				<div ref={bottomRef} />
-				<AgentChatInput isStreaming={isStreaming} onSend={sendMessage} />
+				<div className="space-y-2 flex flex-col w-full p-4">
+					<AgentChatInput isStreaming={isStreaming} onSend={sendMessage} />
+					<AgentDisclaimer />
+				</div>
 			</main>
 		</div>
 	);
