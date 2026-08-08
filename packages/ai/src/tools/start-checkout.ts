@@ -8,7 +8,7 @@ import z from "zod";
 export function buildStartCheckoutTool(sessionId: string) {
 	return tool({
 		description:
-			"Validate the customer's cart and create a pending order record. Returns an order summary with line items and total. The UI displays the order summary and provides a link to the order confirmation page.",
+			"Validate the customer's cart and create a pending order record. Returns an order summary with line items and total. The UI displays the order summary and provides a link to the order confirmation page. DO NOT provide link by text - just mention about the link provided in the UI above the message.",
 		inputSchema: z.object({}),
 		execute: async () => {
 			const [cart] = await db

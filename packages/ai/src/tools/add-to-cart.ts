@@ -23,7 +23,7 @@ async function getOrCreateCart(sessionId: string) {
 export function buildAddToCartTool(sessionId: string) {
 	return tool({
 		description:
-			"Add a product variant to the customer's cart. The quantity is added on top of any existing quantity for that variant. Use getProductDetail first to obtain the correct productVariantId.",
+			"Add a product variant to the customer's cart. The quantity is added on top of any existing quantity for that variant. Requires a productVariantId — call getProductVariants to look up available variants and their IDs.",
 		inputSchema: z.object({
 			productVariantId: z.string().describe("The variant ID to add (from getProductDetail)"),
 			quantity: z.number().int().min(1).default(1).describe("Number of units to add"),

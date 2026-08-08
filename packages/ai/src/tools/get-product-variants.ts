@@ -3,35 +3,21 @@ import { tool } from "ai";
 import { and, eq } from "drizzle-orm";
 import z from "zod";
 
-export const getProductDetailTool = tool({
+export const getProductVariantsTool = tool({
 	description:
-		"Fetch full product details including all purchasable variants (sizes, prices, stock availability) by product slug. Use this when the customer explicitly asks to see a specific product.",
+		"Internal tool: fetch purchasable variants (IDs, names, prices, stock) for a product by slug. Use this to resolve a productVariantId before calling addToCart. Do NOT use this when the customer asks to see product details — use getProductDetail for that.",
 	inputSchema: z.object({
 		slug: z.string().describe("Product slug (URL-safe identifier, e.g. 'la-roche-posay-toleriane-cleanser')"),
 	}),
 	execute: async ({ slug }) => {
 		const [product] = await db
-			.select({
-				id: products.id,
-				name: products.name,
-				slug: products.slug,
-				brand: products.brand,
-				shortDescription: products.shortDescription,
-				agentSummary: products.agentSummary,
-				categoryId: products.categoryId,
-				tags: products.tags,
-				attributes: products.attributes,
-				lowestPriceInCents: products.lowestPriceInCents,
-				currency: products.currency,
-				averageRating: products.averageRating,
-				reviewCount: products.reviewCount,
-			})
+			.select({ id: products.id, name: products.name })
 			.from(products)
 			.where(and(eq(products.slug, slug), eq(products.status, "active")))
 			.limit(1);
 
 		if (!product) {
-			return { found: false, product: null };
+			return { found: false, productId: null, productName: null, variants: [] };
 		}
 
 		const variants = await db
@@ -49,6 +35,6 @@ export const getProductDetailTool = tool({
 			.where(eq(productVariants.productId, product.id))
 			.orderBy(productVariants.position);
 
-		return { found: true, product: { ...product, variants } };
+		return { found: true, productId: product.id, productName: product.name, variants };
 	},
 });

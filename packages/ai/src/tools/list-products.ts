@@ -6,7 +6,7 @@ import z from "zod";
 
 export const listProductsTool = tool({
 	description:
-		"Browse the product catalog with structured filters. Use this for category browsing, brand pages, or attribute-based filtering. For free-form natural-language queries prefer searchProducts instead.",
+		"Display tool: show a paginated product listing to the customer. Call this when the customer explicitly wants to browse or see products (e.g. 'show me sunscreens', 'what moisturisers do you have?'). Results are rendered as product cards in the UI. For internal lookups use searchProducts instead.",
 	inputSchema: z.object({
 		categoryId: z.string().optional().describe("Filter to a specific category (use searchCategories to find IDs)"),
 		brand: z.string().optional().describe("Brand name filter (case-insensitive)"),
