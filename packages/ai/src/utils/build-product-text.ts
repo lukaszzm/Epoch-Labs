@@ -1,6 +1,6 @@
 import type { ProductAttributeValues } from "@epoch-labs/db";
 
-interface BuildProductTextOptions {
+export interface BuildProductTextOptions {
 	name: string;
 	brand: string;
 	shortDescription: string;

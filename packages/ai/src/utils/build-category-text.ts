@@ -1,6 +1,6 @@
 import type { AgentHints } from "@epoch-labs/db";
 
-interface BuildCategoryTextOptions {
+export interface BuildCategoryTextOptions {
 	name: string;
 	description: string;
 	agentHints: Pick<AgentHints, "synonyms" | "intents">;

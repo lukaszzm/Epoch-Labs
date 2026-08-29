@@ -20,11 +20,11 @@ export async function embedProducts(): Promise<{ updated: number }> {
 		.where(and(eq(products.isIndexed, true), isNull(products.embedding)));
 
 	if (rows.length === 0) {
-		console.log("Products: nothing to embed.");
+		console.warn("No products found that require embedding. Exiting...");
 		return { updated: 0 };
 	}
 
-	console.log(`Products: embedding ${rows.length} rows…`);
+	console.log(`Embedding ${rows.length} products...`);
 
 	let updated = 0;
 
@@ -44,7 +44,7 @@ export async function embedProducts(): Promise<{ updated: number }> {
 		);
 
 		updated += batch.length;
-		console.log(`Products: ${updated}/${rows.length} embedded`);
+		console.log(`Embedded ${updated}/${rows.length} products`);
 	}
 
 	return { updated };
@@ -61,6 +61,6 @@ embedProducts()
 		process.exit(0);
 	})
 	.catch((error) => {
-		console.error("Error embedding products:", error);
+		console.error(`Error embedding products: ${error.message}`);
 		process.exit(1);
 	});

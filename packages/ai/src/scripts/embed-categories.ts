@@ -17,11 +17,11 @@ export async function embedCategories(): Promise<{ updated: number }> {
 		.where(and(eq(categories.isIndexed, true), isNull(categories.embedding)));
 
 	if (rows.length === 0) {
-		console.log("Categories: nothing to embed.");
+		console.warn("No categories found that require embedding. Exiting...");
 		return { updated: 0 };
 	}
 
-	console.log(`Categories: embedding ${rows.length} rows…`);
+	console.log(`Embedding ${rows.length} categories...`);
 
 	let updated = 0;
 
@@ -43,7 +43,7 @@ export async function embedCategories(): Promise<{ updated: number }> {
 		);
 
 		updated += batch.length;
-		console.log(`Categories: ${updated}/${rows.length} embedded`);
+		console.log(`Embedded ${updated}/${rows.length} categories`);
 	}
 
 	return { updated };
@@ -55,6 +55,6 @@ embedCategories()
 		process.exit(0);
 	})
 	.catch((error) => {
-		console.error("Error embedding categories:", error);
+		console.error(`Error embedding categories: ${error.message}`);
 		process.exit(1);
 	});
