@@ -1,21 +1,34 @@
 {
 	"$schema": "https://turborepo.dev/schema.json",
 	"ui": "tui",
+	"globalDependencies": ["biome.json", "packages/typescript-config/**"],
 	"tasks": {
 		"build": {
 			"dependsOn": ["^build"],
 			"inputs": ["$TURBO_DEFAULT$", ".env*"],
-			"outputs": [".next/**", "!.next/cache/**"]
+			"outputs": ["dist/**", ".output/**"]
 		},
 		"lint": {
-			"dependsOn": ["^lint"]
+			"outputs": []
 		},
 		"check-types": {
-			"dependsOn": ["^check-types"]
+			"dependsOn": ["^build"],
+			"outputs": []
+		},
+		"test": {
+			"dependsOn": ["^build"],
+			"outputs": ["coverage/**"]
 		},
 		"dev": {
+			"dependsOn": ["^build"],
 			"cache": false,
 			"persistent": true
+		},
+		"@epoch-labs/ai#build": {
+			"cache": false
+		},
+		"@epoch-labs/db#build": {
+			"cache": false
 		}
 	}
 }

@@ -16,6 +16,7 @@
 	},
 	"scripts": {
 		"build": "tsdown",
+		"check-types": "tsc --noEmit",
 		"push": "drizzle-kit push",
 		"studio": "drizzle-kit studio",
 		"generate": "drizzle-kit generate --schema ./src/schema.ts --dialect postgresql --out ./drizzle",

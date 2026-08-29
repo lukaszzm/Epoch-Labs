@@ -16,6 +16,7 @@
 	},
 	"scripts": {
 		"build": "tsdown",
+		"check-types": "tsc --noEmit",
 		"embed:products": "tsx src/scripts/embed-products.ts",
 		"embed:categories": "tsx src/scripts/embed-categories.ts",
 		"generate:product-image": "tsx src/scripts/generate-product-image.ts"
