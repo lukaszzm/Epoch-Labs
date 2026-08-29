@@ -1,21 +1,9 @@
 import { db } from "@/db";
-import {
-	type AgentHints,
-	type BreadcrumbItem,
-	type CategoryAttribute,
-	type CategoryDraft,
-	categories,
-} from "@/schema";
+import { type AgentHints, type BreadcrumbItem, type CategoryAttribute, type CategoryDraft, categories } from "@/schema";
 
 type SeedNode = Omit<
 	CategoryDraft,
-	| "parentId"
-	| "path"
-	| "breadcrumb"
-	| "level"
-	| "isLeaf"
-	| "createdAt"
-	| "updatedAt"
+	"parentId" | "path" | "breadcrumb" | "level" | "isLeaf" | "createdAt" | "updatedAt"
 > & {
 	children?: SeedNode[];
 };
@@ -90,18 +78,7 @@ const ATTR_TEXTURE: CategoryAttribute = {
 	key: "texture",
 	label: "Texture",
 	type: "enum",
-	options: [
-		"cream",
-		"gel",
-		"oil",
-		"foam",
-		"balm",
-		"lotion",
-		"serum",
-		"mist",
-		"powder",
-		"butter",
-	],
+	options: ["cream", "gel", "oil", "foam", "balm", "lotion", "serum", "mist", "powder", "butter"],
 	filterable: true,
 	searchable: true,
 	required: false,
@@ -154,16 +131,7 @@ const ATTR_HAIR_TYPE: CategoryAttribute = {
 	key: "hair_type",
 	label: "Hair Type",
 	type: "multi-enum",
-	options: [
-		"straight",
-		"wavy",
-		"curly",
-		"coily",
-		"fine",
-		"thick",
-		"colour-treated",
-		"damaged",
-	],
+	options: ["straight", "wavy", "curly", "coily", "fine", "thick", "colour-treated", "damaged"],
 	filterable: true,
 	searchable: true,
 	required: true,
@@ -174,16 +142,7 @@ const ATTR_HAIR_CONCERN: CategoryAttribute = {
 	key: "hair_concern",
 	label: "Hair Concern",
 	type: "multi-enum",
-	options: [
-		"volume",
-		"hydration",
-		"frizz",
-		"dandruff",
-		"hair-loss",
-		"colour-protection",
-		"repair",
-		"scalp-care",
-	],
+	options: ["volume", "hydration", "frizz", "dandruff", "hair-loss", "colour-protection", "repair", "scalp-care"],
 	filterable: true,
 	searchable: true,
 	required: false,
@@ -214,17 +173,12 @@ const TREE: SeedNode[] = [
 		id: "cat_skincare",
 		name: "Skincare",
 		slug: "skincare",
-		description:
-			"Comprehensive skincare range covering face, body, hair, and sun protection — no colour cosmetics.",
+		description: "Comprehensive skincare range covering face, body, hair, and sun protection — no colour cosmetics.",
 		position: 1,
 		tags: ["skincare", "beauty", "cosmetics"],
 		agentHints: {
 			synonyms: ["skin care", "beauty routine", "cosmetics", "beauty products"],
-			intents: [
-				"browse all skincare",
-				"find a skincare routine",
-				"start a skincare regimen",
-			],
+			intents: ["browse all skincare", "find a skincare routine", "start a skincare regimen"],
 			complementaryCategories: [],
 			typicalUseCases: ["daily routine", "gifting", "travel kit"],
 		} satisfies AgentHints,
@@ -235,19 +189,14 @@ const TREE: SeedNode[] = [
 				id: "cat_face_care",
 				name: "Face Care",
 				slug: "face-care",
-				description:
-					"Complete face care range — from daily cleansing to targeted treatments.",
+				description: "Complete face care range — from daily cleansing to targeted treatments.",
 				position: 1,
 				tags: ["face", "facial care"],
 				agentHints: {
 					synonyms: ["facial care", "face routine", "face products"],
 					intents: ["face skincare", "build a face routine"],
 					complementaryCategories: ["cat_sun_care"],
-					typicalUseCases: [
-						"morning routine",
-						"evening routine",
-						"weekly treatment",
-					],
+					typicalUseCases: ["morning routine", "evening routine", "weekly treatment"],
 				} satisfies AgentHints,
 				attributes: [],
 
@@ -281,17 +230,8 @@ const TREE: SeedNode[] = [
 								"double cleansing",
 							],
 							complementaryCategories: ["cat_toners", "cat_moisturisers"],
-							targetAudience: [
-								"all skin types",
-								"oily skin",
-								"dry skin",
-								"sensitive skin",
-							],
-							typicalUseCases: [
-								"morning routine",
-								"evening routine",
-								"double cleansing",
-							],
+							targetAudience: ["all skin types", "oily skin", "dry skin", "sensitive skin"],
+							typicalUseCases: ["morning routine", "evening routine", "double cleansing"],
 							agentConfidenceThreshold: 0.7,
 						} satisfies AgentHints,
 						attributes: [
@@ -301,16 +241,7 @@ const TREE: SeedNode[] = [
 								key: "cleanser_format",
 								label: "Format",
 								type: "enum",
-								options: [
-									"gel",
-									"foam",
-									"balm",
-									"oil",
-									"micellar",
-									"powder",
-									"cream",
-									"bar",
-								],
+								options: ["gel", "foam", "balm", "oil", "micellar", "powder", "cream", "bar"],
 								filterable: true,
 								searchable: true,
 								required: true,
@@ -326,27 +257,15 @@ const TREE: SeedNode[] = [
 						id: "cat_toners",
 						name: "Toners & Essences",
 						slug: "toners-essences",
-						description:
-							"Hydrating and balancing toners and essences to prime skin for serums and moisturisers.",
+						description: "Hydrating and balancing toners and essences to prime skin for serums and moisturisers.",
 						position: 2,
 						tags: ["toner", "essence", "prep"],
 						seoTitle: "Toners & Essences | Epoch Labs Skincare",
 						seoDescription:
 							"Hydrating and exfoliating toners and essences to prep and balance your skin after cleansing.",
 						agentHints: {
-							synonyms: [
-								"facial toner",
-								"essence",
-								"hydrating toner",
-								"exfoliating toner",
-								"prep toner",
-							],
-							intents: [
-								"balance skin pH",
-								"prep skin",
-								"hydrate after cleansing",
-								"exfoliating toner",
-							],
+							synonyms: ["facial toner", "essence", "hydrating toner", "exfoliating toner", "prep toner"],
+							intents: ["balance skin pH", "prep skin", "hydrate after cleansing", "exfoliating toner"],
 							complementaryCategories: ["cat_cleansers", "cat_serums_face"],
 							excludeTerms: ["printer toner", "hair toner"],
 							targetAudience: ["all skin types", "oily skin", "dry skin"],
@@ -360,13 +279,7 @@ const TREE: SeedNode[] = [
 								key: "toner_type",
 								label: "Type",
 								type: "enum",
-								options: [
-									"hydrating",
-									"exfoliating",
-									"balancing",
-									"brightening",
-									"essence",
-								],
+								options: ["hydrating", "exfoliating", "balancing", "brightening", "essence"],
 								filterable: true,
 								searchable: true,
 								required: true,
@@ -384,17 +297,9 @@ const TREE: SeedNode[] = [
 						description:
 							"High-potency targeted treatments for specific concerns — from Vitamin C brightening to retinol anti-ageing.",
 						position: 3,
-						tags: [
-							"serum",
-							"treatment",
-							"concentrate",
-							"vitamin c",
-							"retinol",
-							"niacinamide",
-						],
+						tags: ["serum", "treatment", "concentrate", "vitamin c", "retinol", "niacinamide"],
 						seoTitle: "Serums & Concentrates | Epoch Labs Skincare",
-						seoDescription:
-							"Targeted face serums and concentrates for brightening, anti-ageing, acne, and more.",
+						seoDescription: "Targeted face serums and concentrates for brightening, anti-ageing, acne, and more.",
 						agentHints: {
 							synonyms: [
 								"face serum",
@@ -412,22 +317,9 @@ const TREE: SeedNode[] = [
 								"acne treatment",
 								"target dark spots",
 							],
-							complementaryCategories: [
-								"cat_moisturisers",
-								"cat_toners",
-								"cat_face_spf",
-							],
-							targetAudience: [
-								"all skin types",
-								"mature skin",
-								"oily skin",
-								"acne-prone skin",
-							],
-							typicalUseCases: [
-								"morning routine",
-								"evening routine",
-								"targeted treatment",
-							],
+							complementaryCategories: ["cat_moisturisers", "cat_toners", "cat_face_spf"],
+							targetAudience: ["all skin types", "mature skin", "oily skin", "acne-prone skin"],
+							typicalUseCases: ["morning routine", "evening routine", "targeted treatment"],
 							agentConfidenceThreshold: 0.7,
 						} satisfies AgentHints,
 						attributes: [
@@ -464,13 +356,7 @@ const TREE: SeedNode[] = [
 						description:
 							"Daily and intensive moisturisers to restore hydration, strengthen the barrier, and smooth skin.",
 						position: 4,
-						tags: [
-							"moisturiser",
-							"face cream",
-							"day cream",
-							"night cream",
-							"hydration",
-						],
+						tags: ["moisturiser", "face cream", "day cream", "night cream", "hydration"],
 						seoTitle: "Moisturisers & Face Creams | Epoch Labs Skincare",
 						seoDescription:
 							"Hydrating face creams and moisturisers for every skin type, from lightweight gels to rich night creams.",
@@ -484,30 +370,11 @@ const TREE: SeedNode[] = [
 								"hydrating cream",
 								"barrier cream",
 							],
-							intents: [
-								"moisturise face",
-								"hydrate skin",
-								"dry skin cream",
-								"barrier repair",
-								"face lotion",
-							],
-							complementaryCategories: [
-								"cat_serums_face",
-								"cat_face_oils",
-								"cat_face_spf",
-							],
+							intents: ["moisturise face", "hydrate skin", "dry skin cream", "barrier repair", "face lotion"],
+							complementaryCategories: ["cat_serums_face", "cat_face_oils", "cat_face_spf"],
 							seasonality: ["winter", "autumn"],
-							targetAudience: [
-								"all skin types",
-								"dry skin",
-								"mature skin",
-								"sensitive skin",
-							],
-							typicalUseCases: [
-								"morning routine",
-								"evening routine",
-								"overnight treatment",
-							],
+							targetAudience: ["all skin types", "dry skin", "mature skin", "sensitive skin"],
+							typicalUseCases: ["morning routine", "evening routine", "overnight treatment"],
 							agentConfidenceThreshold: 0.65,
 						} satisfies AgentHints,
 						attributes: BASE_SKIN_ATTRS,
@@ -516,13 +383,11 @@ const TREE: SeedNode[] = [
 						id: "cat_face_oils",
 						name: "Face Oils",
 						slug: "face-oils",
-						description:
-							"Nourishing botanical and blended oils to seal in moisture and deliver essential fatty acids.",
+						description: "Nourishing botanical and blended oils to seal in moisture and deliver essential fatty acids.",
 						position: 5,
 						tags: ["face oil", "facial oil", "dry oil", "botanical oil"],
 						seoTitle: "Face Oils | Epoch Labs Skincare",
-						seoDescription:
-							"Nourishing facial oils — rosehip, marula, squalane, and more — for all skin types.",
+						seoDescription: "Nourishing facial oils — rosehip, marula, squalane, and more — for all skin types.",
 						agentHints: {
 							synonyms: [
 								"facial oil",
@@ -533,20 +398,11 @@ const TREE: SeedNode[] = [
 								"botanical face oil",
 								"face serum oil",
 							],
-							intents: [
-								"nourish face",
-								"lock in moisture",
-								"face oil routine",
-								"natural oil for face",
-							],
+							intents: ["nourish face", "lock in moisture", "face oil routine", "natural oil for face"],
 							complementaryCategories: ["cat_moisturisers", "cat_serums_face"],
 							seasonality: ["winter", "autumn"],
 							targetAudience: ["dry skin", "mature skin", "normal skin"],
-							typicalUseCases: [
-								"evening routine",
-								"overnight treatment",
-								"dry skin boost",
-							],
+							typicalUseCases: ["evening routine", "overnight treatment", "dry skin boost"],
 							agentConfidenceThreshold: 0.72,
 						} satisfies AgentHints,
 						attributes: [
@@ -556,15 +412,7 @@ const TREE: SeedNode[] = [
 								key: "oil_type",
 								label: "Oil Type",
 								type: "enum",
-								options: [
-									"rosehip",
-									"marula",
-									"jojoba",
-									"squalane",
-									"argan",
-									"sea-buckthorn",
-									"blend",
-								],
+								options: ["rosehip", "marula", "jojoba", "squalane", "argan", "sea-buckthorn", "blend"],
 								filterable: true,
 								searchable: true,
 								required: false,
@@ -579,27 +427,14 @@ const TREE: SeedNode[] = [
 						id: "cat_eye_creams",
 						name: "Eye Creams",
 						slug: "eye-creams",
-						description:
-							"Delicate formulas targeting dark circles, puffiness, and fine lines around the eye contour.",
+						description: "Delicate formulas targeting dark circles, puffiness, and fine lines around the eye contour.",
 						position: 6,
 						tags: ["eye cream", "eye care", "dark circles", "puffiness"],
 						seoTitle: "Eye Creams | Epoch Labs Skincare",
-						seoDescription:
-							"Targeted eye creams and gels for dark circles, puffiness, and fine lines.",
+						seoDescription: "Targeted eye creams and gels for dark circles, puffiness, and fine lines.",
 						agentHints: {
-							synonyms: [
-								"eye cream",
-								"under eye cream",
-								"eye contour cream",
-								"eye serum",
-								"eye gel",
-							],
-							intents: [
-								"reduce dark circles",
-								"reduce puffiness",
-								"eye anti-aging",
-								"eye area care",
-							],
+							synonyms: ["eye cream", "under eye cream", "eye contour cream", "eye serum", "eye gel"],
+							intents: ["reduce dark circles", "reduce puffiness", "eye anti-aging", "eye area care"],
 							complementaryCategories: ["cat_serums_face", "cat_moisturisers"],
 							targetAudience: ["all skin types", "mature skin", "tired skin"],
 							typicalUseCases: ["morning routine", "evening routine"],
@@ -611,13 +446,7 @@ const TREE: SeedNode[] = [
 								key: "eye_concern",
 								label: "Eye Concern",
 								type: "multi-enum",
-								options: [
-									"dark-circles",
-									"puffiness",
-									"fine-lines",
-									"firmness",
-									"hydration",
-								],
+								options: ["dark-circles", "puffiness", "fine-lines", "firmness", "hydration"],
 								filterable: true,
 								searchable: true,
 								required: true,
@@ -642,19 +471,11 @@ const TREE: SeedNode[] = [
 						id: "cat_face_masks",
 						name: "Face Masks",
 						slug: "face-masks",
-						description:
-							"Intensive treatment masks for deep hydration, purifying, brightening, and anti-ageing.",
+						description: "Intensive treatment masks for deep hydration, purifying, brightening, and anti-ageing.",
 						position: 7,
-						tags: [
-							"face mask",
-							"sheet mask",
-							"clay mask",
-							"hydrating mask",
-							"sleeping mask",
-						],
+						tags: ["face mask", "sheet mask", "clay mask", "hydrating mask", "sleeping mask"],
 						seoTitle: "Face Masks | Epoch Labs Skincare",
-						seoDescription:
-							"Hydrating, purifying, and brightening face masks — sheet, clay, gel, and sleeping masks.",
+						seoDescription: "Hydrating, purifying, and brightening face masks — sheet, clay, gel, and sleeping masks.",
 						agentHints: {
 							synonyms: [
 								"face mask",
@@ -665,19 +486,10 @@ const TREE: SeedNode[] = [
 								"overnight mask",
 								"peel-off mask",
 							],
-							intents: [
-								"weekly face treatment",
-								"deep cleanse face",
-								"hydrating mask",
-								"brightening mask",
-							],
+							intents: ["weekly face treatment", "deep cleanse face", "hydrating mask", "brightening mask"],
 							complementaryCategories: ["cat_serums_face", "cat_toners"],
 							targetAudience: ["all skin types", "oily skin", "dry skin"],
-							typicalUseCases: [
-								"weekly treatment",
-								"weekend routine",
-								"event prep",
-							],
+							typicalUseCases: ["weekly treatment", "weekend routine", "event prep"],
 							agentConfidenceThreshold: 0.7,
 						} satisfies AgentHints,
 						attributes: [
@@ -687,14 +499,7 @@ const TREE: SeedNode[] = [
 								key: "mask_type",
 								label: "Mask Type",
 								type: "enum",
-								options: [
-									"sheet",
-									"clay",
-									"gel",
-									"cream",
-									"peel-off",
-									"sleeping",
-								],
+								options: ["sheet", "clay", "gel", "cream", "peel-off", "sleeping"],
 								filterable: true,
 								searchable: true,
 								required: true,
@@ -712,17 +517,9 @@ const TREE: SeedNode[] = [
 						description:
 							"Physical and chemical exfoliants to slough off dead cells and reveal brighter, smoother skin.",
 						position: 8,
-						tags: [
-							"exfoliant",
-							"scrub",
-							"aha",
-							"bha",
-							"chemical exfoliant",
-							"physical scrub",
-						],
+						tags: ["exfoliant", "scrub", "aha", "bha", "chemical exfoliant", "physical scrub"],
 						seoTitle: "Face Exfoliants & Scrubs | Epoch Labs Skincare",
-						seoDescription:
-							"AHA, BHA, enzyme, and physical face exfoliants for brighter, clearer skin.",
+						seoDescription: "AHA, BHA, enzyme, and physical face exfoliants for brighter, clearer skin.",
 						agentHints: {
 							synonyms: [
 								"face scrub",
@@ -733,12 +530,7 @@ const TREE: SeedNode[] = [
 								"glycolic acid",
 								"lactic acid",
 							],
-							intents: [
-								"exfoliate face",
-								"brighten skin",
-								"remove dead skin cells",
-								"unclog pores",
-							],
+							intents: ["exfoliate face", "brighten skin", "remove dead skin cells", "unclog pores"],
 							complementaryCategories: ["cat_toners", "cat_serums_face"],
 							excludeTerms: ["body scrub"],
 							targetAudience: ["all skin types", "oily skin", "dull skin"],
@@ -752,14 +544,7 @@ const TREE: SeedNode[] = [
 								key: "exfoliant_type",
 								label: "Exfoliant Type",
 								type: "enum",
-								options: [
-									"aha",
-									"bha",
-									"pha",
-									"enzyme",
-									"physical",
-									"combined",
-								],
+								options: ["aha", "bha", "pha", "enzyme", "physical", "combined"],
 								filterable: true,
 								searchable: true,
 								required: true,
@@ -776,17 +561,11 @@ const TREE: SeedNode[] = [
 				id: "cat_sun_care",
 				name: "Sun Care",
 				slug: "sun-care",
-				description:
-					"Broad-spectrum sun protection and after-sun recovery for face and body.",
+				description: "Broad-spectrum sun protection and after-sun recovery for face and body.",
 				position: 2,
 				tags: ["spf", "sunscreen", "sun protection", "uv"],
 				agentHints: {
-					synonyms: [
-						"sunscreen",
-						"sun protection",
-						"SPF products",
-						"UV protection",
-					],
+					synonyms: ["sunscreen", "sun protection", "SPF products", "UV protection"],
 					intents: ["protect from sun", "find SPF products", "buy sunscreen"],
 					complementaryCategories: ["cat_face_care", "cat_body_care"],
 					seasonality: ["spring", "summer", "june", "july", "august"],
@@ -801,12 +580,7 @@ const TREE: SeedNode[] = [
 						description:
 							"Lightweight daily SPF formulas designed for facial skin — non-comedogenic and finish-friendly.",
 						position: 1,
-						tags: [
-							"face spf",
-							"facial sunscreen",
-							"daily spf",
-							"uv protection face",
-						],
+						tags: ["face spf", "facial sunscreen", "daily spf", "uv protection face"],
 						seoTitle: "Face Sunscreen & SPF | Epoch Labs Skincare",
 						seoDescription:
 							"Lightweight SPF moisturisers and sunscreens for daily face protection — mineral, chemical, and tinted.",
@@ -820,24 +594,11 @@ const TREE: SeedNode[] = [
 								"sun lotion face",
 								"sunscreen moisturiser",
 							],
-							intents: [
-								"protect face from sun",
-								"daily SPF",
-								"SPF moisturiser",
-								"non-greasy sunscreen",
-							],
-							complementaryCategories: [
-								"cat_moisturisers",
-								"cat_serums_face",
-								"cat_after_sun",
-							],
+							intents: ["protect face from sun", "daily SPF", "SPF moisturiser", "non-greasy sunscreen"],
+							complementaryCategories: ["cat_moisturisers", "cat_serums_face", "cat_after_sun"],
 							seasonality: ["spring", "summer", "all year"],
 							targetAudience: ["all skin types", "oily skin"],
-							typicalUseCases: [
-								"morning routine",
-								"outdoor activities",
-								"daily protection",
-							],
+							typicalUseCases: ["morning routine", "outdoor activities", "daily protection"],
 							agentConfidenceThreshold: 0.65,
 						} satisfies AgentHints,
 						attributes: [
@@ -872,18 +633,11 @@ const TREE: SeedNode[] = [
 						id: "cat_body_spf",
 						name: "Body SPF",
 						slug: "body-spf",
-						description:
-							"Broad-spectrum sprays, lotions, and creams to shield body skin from UVA and UVB rays.",
+						description: "Broad-spectrum sprays, lotions, and creams to shield body skin from UVA and UVB rays.",
 						position: 2,
-						tags: [
-							"body sunscreen",
-							"body spf",
-							"sunscreen spray",
-							"sun lotion",
-						],
+						tags: ["body sunscreen", "body spf", "sunscreen spray", "sun lotion"],
 						seoTitle: "Body Sunscreen & SPF | Epoch Labs Skincare",
-						seoDescription:
-							"Broad-spectrum body sunscreen — lotions, sprays, and sticks in SPF 30, 50, and 50+.",
+						seoDescription: "Broad-spectrum body sunscreen — lotions, sprays, and sticks in SPF 30, 50, and 50+.",
 						agentHints: {
 							synonyms: [
 								"body sunscreen",
@@ -893,17 +647,8 @@ const TREE: SeedNode[] = [
 								"SPF body lotion",
 								"waterproof sunscreen",
 							],
-							intents: [
-								"protect body from sun",
-								"beach SPF",
-								"waterproof sunscreen",
-								"holiday sunscreen",
-							],
-							complementaryCategories: [
-								"cat_after_sun",
-								"cat_body_lotions",
-								"cat_face_spf",
-							],
+							intents: ["protect body from sun", "beach SPF", "waterproof sunscreen", "holiday sunscreen"],
+							complementaryCategories: ["cat_after_sun", "cat_body_lotions", "cat_face_spf"],
 							seasonality: ["spring", "summer", "june", "july", "august"],
 							targetAudience: ["all skin types"],
 							typicalUseCases: ["beach", "outdoor activities", "holiday"],
@@ -938,13 +683,11 @@ const TREE: SeedNode[] = [
 						id: "cat_after_sun",
 						name: "After-Sun Care",
 						slug: "after-sun-care",
-						description:
-							"Soothing, cooling, and repairing formulas to calm and restore sun-exposed skin.",
+						description: "Soothing, cooling, and repairing formulas to calm and restore sun-exposed skin.",
 						position: 3,
 						tags: ["after sun", "soothing", "cooling", "aloe vera", "sunburn"],
 						seoTitle: "After-Sun Care | Epoch Labs Skincare",
-						seoDescription:
-							"Soothing after-sun lotions, gels, and sprays to cool and repair skin after sun exposure.",
+						seoDescription: "Soothing after-sun lotions, gels, and sprays to cool and repair skin after sun exposure.",
 						agentHints: {
 							synonyms: [
 								"after sun lotion",
@@ -954,12 +697,7 @@ const TREE: SeedNode[] = [
 								"sunburn relief",
 								"after sun gel",
 							],
-							intents: [
-								"soothe sunburn",
-								"after sun routine",
-								"repair sun-exposed skin",
-								"cool skin after sun",
-							],
+							intents: ["soothe sunburn", "after sun routine", "repair sun-exposed skin", "cool skin after sun"],
 							complementaryCategories: ["cat_face_spf", "cat_body_spf"],
 							seasonality: ["summer", "july", "august"],
 							targetAudience: ["all skin types", "sensitive skin"],
@@ -988,22 +726,12 @@ const TREE: SeedNode[] = [
 				id: "cat_body_care",
 				name: "Body Care",
 				slug: "body-care",
-				description:
-					"Head-to-toe body care — cleansing, moisturising, exfoliating, and treating body skin.",
+				description: "Head-to-toe body care — cleansing, moisturising, exfoliating, and treating body skin.",
 				position: 3,
 				tags: ["body", "body skincare", "body lotion", "body wash"],
 				agentHints: {
-					synonyms: [
-						"body skincare",
-						"body beauty",
-						"body routine",
-						"body moisturiser",
-					],
-					intents: [
-						"body skincare routine",
-						"moisturise body",
-						"body care products",
-					],
+					synonyms: ["body skincare", "body beauty", "body routine", "body moisturiser"],
+					intents: ["body skincare routine", "moisturise body", "body care products"],
 					complementaryCategories: ["cat_sun_care"],
 					typicalUseCases: ["post-shower routine", "daily moisturising"],
 				} satisfies AgentHints,
@@ -1013,37 +741,15 @@ const TREE: SeedNode[] = [
 						id: "cat_body_lotions",
 						name: "Body Lotions & Creams",
 						slug: "body-lotions-creams",
-						description:
-							"Rich and lightweight formulas to deeply hydrate and soften skin from neck to toe.",
+						description: "Rich and lightweight formulas to deeply hydrate and soften skin from neck to toe.",
 						position: 1,
-						tags: [
-							"body lotion",
-							"body cream",
-							"body moisturiser",
-							"body butter",
-						],
+						tags: ["body lotion", "body cream", "body moisturiser", "body butter"],
 						seoTitle: "Body Lotions & Creams | Epoch Labs Skincare",
-						seoDescription:
-							"Deeply hydrating body lotions, creams, and butters for all skin types.",
+						seoDescription: "Deeply hydrating body lotions, creams, and butters for all skin types.",
 						agentHints: {
-							synonyms: [
-								"body lotion",
-								"body moisturiser",
-								"body cream",
-								"body butter",
-								"dry skin body lotion",
-							],
-							intents: [
-								"moisturise body",
-								"dry body skin",
-								"body hydration",
-								"soft skin body",
-							],
-							complementaryCategories: [
-								"cat_body_wash",
-								"cat_body_scrubs",
-								"cat_body_spf",
-							],
+							synonyms: ["body lotion", "body moisturiser", "body cream", "body butter", "dry skin body lotion"],
+							intents: ["moisturise body", "dry body skin", "body hydration", "soft skin body"],
+							complementaryCategories: ["cat_body_wash", "cat_body_scrubs", "cat_body_spf"],
 							seasonality: ["winter", "autumn"],
 							targetAudience: ["dry skin", "all skin types"],
 							typicalUseCases: ["post-shower routine", "daily moisturising"],
@@ -1070,26 +776,14 @@ const TREE: SeedNode[] = [
 						id: "cat_body_wash",
 						name: "Body Wash & Shower Gel",
 						slug: "body-wash-shower-gel",
-						description:
-							"Luxurious and gentle body washes and shower gels for the daily cleanse.",
+						description: "Luxurious and gentle body washes and shower gels for the daily cleanse.",
 						position: 2,
 						tags: ["body wash", "shower gel", "shower cream", "bath gel"],
 						seoTitle: "Body Wash & Shower Gel | Epoch Labs Skincare",
-						seoDescription:
-							"Gentle, moisturising body washes and shower gels — sulfate-free options available.",
+						seoDescription: "Gentle, moisturising body washes and shower gels — sulfate-free options available.",
 						agentHints: {
-							synonyms: [
-								"shower gel",
-								"body wash",
-								"shower cream",
-								"bath gel",
-								"soap-free wash",
-							],
-							intents: [
-								"gentle body cleanse",
-								"shower routine",
-								"moisturising body wash",
-							],
+							synonyms: ["shower gel", "body wash", "shower cream", "bath gel", "soap-free wash"],
+							intents: ["gentle body cleanse", "shower routine", "moisturising body wash"],
 							complementaryCategories: ["cat_body_lotions", "cat_body_scrubs"],
 							targetAudience: ["all skin types", "sensitive skin"],
 							typicalUseCases: ["daily shower", "bath routine"],
@@ -1124,19 +818,11 @@ const TREE: SeedNode[] = [
 						id: "cat_body_scrubs",
 						name: "Body Scrubs & Exfoliants",
 						slug: "body-scrubs-exfoliants",
-						description:
-							"Physical and chemical exfoliants to buff away dry patches and reveal smooth, radiant skin.",
+						description: "Physical and chemical exfoliants to buff away dry patches and reveal smooth, radiant skin.",
 						position: 3,
-						tags: [
-							"body scrub",
-							"body exfoliant",
-							"sugar scrub",
-							"salt scrub",
-							"coffee scrub",
-						],
+						tags: ["body scrub", "body exfoliant", "sugar scrub", "salt scrub", "coffee scrub"],
 						seoTitle: "Body Scrubs & Exfoliants | Epoch Labs Skincare",
-						seoDescription:
-							"Sugar, salt, coffee, and enzyme body scrubs for smoother, glowing skin.",
+						seoDescription: "Sugar, salt, coffee, and enzyme body scrubs for smoother, glowing skin.",
 						agentHints: {
 							synonyms: [
 								"body scrub",
@@ -1146,19 +832,10 @@ const TREE: SeedNode[] = [
 								"body polish",
 								"coffee scrub",
 							],
-							intents: [
-								"exfoliate body",
-								"smooth skin",
-								"remove dry patches",
-								"pre-tan exfoliant",
-							],
+							intents: ["exfoliate body", "smooth skin", "remove dry patches", "pre-tan exfoliant"],
 							complementaryCategories: ["cat_body_lotions", "cat_body_wash"],
 							targetAudience: ["all skin types", "dry skin"],
-							typicalUseCases: [
-								"weekly treatment",
-								"pre-tan prep",
-								"self-care day",
-							],
+							typicalUseCases: ["weekly treatment", "pre-tan prep", "self-care day"],
 							agentConfidenceThreshold: 0.7,
 						} satisfies AgentHints,
 						attributes: [
@@ -1166,14 +843,7 @@ const TREE: SeedNode[] = [
 								key: "exfoliant_type",
 								label: "Exfoliant Type",
 								type: "enum",
-								options: [
-									"sugar",
-									"salt",
-									"coffee",
-									"chemical",
-									"charcoal",
-									"enzyme",
-								],
+								options: ["sugar", "salt", "coffee", "chemical", "charcoal", "enzyme"],
 								filterable: true,
 								searchable: true,
 								required: true,
@@ -1188,82 +858,36 @@ const TREE: SeedNode[] = [
 						id: "cat_hand_creams",
 						name: "Hand Creams & Treatments",
 						slug: "hand-creams-treatments",
-						description:
-							"Nourishing and protective formulas for dry, cracked, or hard-working hands.",
+						description: "Nourishing and protective formulas for dry, cracked, or hard-working hands.",
 						position: 4,
 						tags: ["hand cream", "hand lotion", "hand treatment", "hand balm"],
 						seoTitle: "Hand Creams & Treatments | Epoch Labs Skincare",
-						seoDescription:
-							"Intensive and everyday hand creams and treatments for soft, smooth hands.",
+						seoDescription: "Intensive and everyday hand creams and treatments for soft, smooth hands.",
 						agentHints: {
-							synonyms: [
-								"hand cream",
-								"hand lotion",
-								"hand salve",
-								"hand moisturiser",
-								"hand balm",
-							],
-							intents: [
-								"moisturise hands",
-								"dry hands",
-								"cracked hands",
-								"hand care",
-							],
+							synonyms: ["hand cream", "hand lotion", "hand salve", "hand moisturiser", "hand balm"],
+							intents: ["moisturise hands", "dry hands", "cracked hands", "hand care"],
 							complementaryCategories: ["cat_body_lotions"],
 							targetAudience: ["dry skin", "all skin types"],
-							typicalUseCases: [
-								"throughout the day",
-								"overnight treatment",
-								"travel kit",
-							],
+							typicalUseCases: ["throughout the day", "overnight treatment", "travel kit"],
 							agentConfidenceThreshold: 0.65,
 						} satisfies AgentHints,
-						attributes: [
-							ATTR_TEXTURE,
-							ATTR_FRAGRANCE_FREE,
-							ATTR_SIZE_ML,
-							ATTR_KEY_INGREDIENTS,
-						],
+						attributes: [ATTR_TEXTURE, ATTR_FRAGRANCE_FREE, ATTR_SIZE_ML, ATTR_KEY_INGREDIENTS],
 					},
 					{
 						id: "cat_foot_care",
 						name: "Foot Care",
 						slug: "foot-care",
-						description:
-							"Intensive creams, scrubs, and masks to soften rough heels and keep feet smooth.",
+						description: "Intensive creams, scrubs, and masks to soften rough heels and keep feet smooth.",
 						position: 5,
-						tags: [
-							"foot cream",
-							"foot care",
-							"heel balm",
-							"foot mask",
-							"cracked heels",
-						],
+						tags: ["foot cream", "foot care", "heel balm", "foot mask", "cracked heels"],
 						seoTitle: "Foot Care | Epoch Labs Skincare",
-						seoDescription:
-							"Heel balms, foot creams, scrubs, and masks for soft, smooth feet.",
+						seoDescription: "Heel balms, foot creams, scrubs, and masks for soft, smooth feet.",
 						agentHints: {
-							synonyms: [
-								"foot cream",
-								"heel balm",
-								"foot balm",
-								"foot scrub",
-								"foot mask",
-								"cracked heel cream",
-							],
-							intents: [
-								"soften heels",
-								"cracked heels",
-								"foot moisturiser",
-								"foot treatment",
-							],
+							synonyms: ["foot cream", "heel balm", "foot balm", "foot scrub", "foot mask", "cracked heel cream"],
+							intents: ["soften heels", "cracked heels", "foot moisturiser", "foot treatment"],
 							complementaryCategories: ["cat_body_lotions"],
 							targetAudience: ["dry skin", "all skin types"],
-							typicalUseCases: [
-								"overnight treatment",
-								"weekly treatment",
-								"self-care day",
-							],
+							typicalUseCases: ["overnight treatment", "weekly treatment", "self-care day"],
 							agentConfidenceThreshold: 0.7,
 						} satisfies AgentHints,
 						attributes: [
@@ -1288,22 +912,12 @@ const TREE: SeedNode[] = [
 				id: "cat_hair_care",
 				name: "Hair Care",
 				slug: "hair-care",
-				description:
-					"Shampoos, conditioners, treatments, and scalp care for all hair types and concerns.",
+				description: "Shampoos, conditioners, treatments, and scalp care for all hair types and concerns.",
 				position: 4,
 				tags: ["hair", "hair care", "shampoo", "conditioner", "scalp"],
 				agentHints: {
-					synonyms: [
-						"hair products",
-						"hair routine",
-						"haircare",
-						"hair washing",
-					],
-					intents: [
-						"hair care routine",
-						"find hair products",
-						"wash day products",
-					],
+					synonyms: ["hair products", "hair routine", "haircare", "hair washing"],
+					intents: ["hair care routine", "find hair products", "wash day products"],
 					complementaryCategories: [],
 					typicalUseCases: ["wash day routine", "weekly treatment"],
 				} satisfies AgentHints,
@@ -1328,19 +942,9 @@ const TREE: SeedNode[] = [
 								"sulfate-free shampoo",
 								"volumising shampoo",
 							],
-							intents: [
-								"wash hair",
-								"cleanse scalp",
-								"hydrating shampoo",
-								"volumising shampoo",
-							],
+							intents: ["wash hair", "cleanse scalp", "hydrating shampoo", "volumising shampoo"],
 							complementaryCategories: ["cat_conditioners", "cat_scalp_care"],
-							targetAudience: [
-								"all hair types",
-								"oily hair",
-								"dry hair",
-								"colour-treated hair",
-							],
+							targetAudience: ["all hair types", "oily hair", "dry hair", "colour-treated hair"],
 							typicalUseCases: ["wash day", "daily routine"],
 							agentConfidenceThreshold: 0.65,
 						} satisfies AgentHints,
@@ -1360,15 +964,9 @@ const TREE: SeedNode[] = [
 						description:
 							"Rinse-out, leave-in, and co-wash conditioners to detangle, nourish, and smooth every hair type.",
 						position: 2,
-						tags: [
-							"conditioner",
-							"hair conditioner",
-							"leave-in conditioner",
-							"co-wash",
-						],
+						tags: ["conditioner", "hair conditioner", "leave-in conditioner", "co-wash"],
 						seoTitle: "Conditioners | Epoch Labs Skincare",
-						seoDescription:
-							"Rinse-out, leave-in, and co-wash conditioners for smooth, nourished, frizz-free hair.",
+						seoDescription: "Rinse-out, leave-in, and co-wash conditioners for smooth, nourished, frizz-free hair.",
 						agentHints: {
 							synonyms: [
 								"hair conditioner",
@@ -1377,19 +975,9 @@ const TREE: SeedNode[] = [
 								"deep conditioner",
 								"co-wash",
 							],
-							intents: [
-								"condition hair",
-								"detangle hair",
-								"smooth frizz",
-								"nourish hair",
-							],
+							intents: ["condition hair", "detangle hair", "smooth frizz", "nourish hair"],
 							complementaryCategories: ["cat_shampoo", "cat_hair_masks"],
-							targetAudience: [
-								"all hair types",
-								"dry hair",
-								"damaged hair",
-								"curly hair",
-							],
+							targetAudience: ["all hair types", "dry hair", "damaged hair", "curly hair"],
 							typicalUseCases: ["wash day", "daily routine"],
 							agentConfidenceThreshold: 0.65,
 						} satisfies AgentHints,
@@ -1417,13 +1005,7 @@ const TREE: SeedNode[] = [
 						description:
 							"Intensive weekly masks and treatments for deep repair, hydration, protein restoration, and nourishment.",
 						position: 3,
-						tags: [
-							"hair mask",
-							"hair treatment",
-							"deep conditioning",
-							"protein treatment",
-							"bond repair",
-						],
+						tags: ["hair mask", "hair treatment", "deep conditioning", "protein treatment", "bond repair"],
 						seoTitle: "Hair Masks & Treatments | Epoch Labs Skincare",
 						seoDescription:
 							"Deep conditioning hair masks and repair treatments for dry, damaged, and colour-treated hair.",
@@ -1435,12 +1017,7 @@ const TREE: SeedNode[] = [
 								"hair repair treatment",
 								"bond repair mask",
 							],
-							intents: [
-								"deep condition hair",
-								"repair damaged hair",
-								"weekly hair treatment",
-								"strengthen hair",
-							],
+							intents: ["deep condition hair", "repair damaged hair", "weekly hair treatment", "strengthen hair"],
 							complementaryCategories: ["cat_conditioners", "cat_scalp_care"],
 							targetAudience: ["damaged hair", "dry hair", "all hair types"],
 							typicalUseCases: ["weekly treatment", "self-care day"],
@@ -1452,14 +1029,7 @@ const TREE: SeedNode[] = [
 								key: "treatment_focus",
 								label: "Treatment Focus",
 								type: "multi-enum",
-								options: [
-									"moisture",
-									"protein",
-									"repair",
-									"scalp",
-									"growth",
-									"colour-protection",
-								],
+								options: ["moisture", "protein", "repair", "scalp", "growth", "colour-protection"],
 								filterable: true,
 								searchable: true,
 								required: false,
@@ -1477,16 +1047,9 @@ const TREE: SeedNode[] = [
 						description:
 							"Targeted scalp treatments, scrubs, and serums for dandruff, dryness, buildup, and hair growth.",
 						position: 4,
-						tags: [
-							"scalp care",
-							"scalp serum",
-							"scalp treatment",
-							"dandruff",
-							"hair growth",
-						],
+						tags: ["scalp care", "scalp serum", "scalp treatment", "dandruff", "hair growth"],
 						seoTitle: "Scalp Care | Epoch Labs Skincare",
-						seoDescription:
-							"Scalp serums, scrubs, and treatments for dandruff, dryness, oiliness, and hair growth.",
+						seoDescription: "Scalp serums, scrubs, and treatments for dandruff, dryness, oiliness, and hair growth.",
 						agentHints: {
 							synonyms: [
 								"scalp serum",
@@ -1496,19 +1059,9 @@ const TREE: SeedNode[] = [
 								"hair growth serum",
 								"scalp tonic",
 							],
-							intents: [
-								"treat scalp",
-								"reduce dandruff",
-								"promote hair growth",
-								"soothe itchy scalp",
-							],
+							intents: ["treat scalp", "reduce dandruff", "promote hair growth", "soothe itchy scalp"],
 							complementaryCategories: ["cat_shampoo", "cat_hair_masks"],
-							targetAudience: [
-								"all hair types",
-								"oily scalp",
-								"dry scalp",
-								"dandruff-prone scalp",
-							],
+							targetAudience: ["all hair types", "oily scalp", "dry scalp", "dandruff-prone scalp"],
 							typicalUseCases: ["weekly treatment", "daily scalp routine"],
 							agentConfidenceThreshold: 0.72,
 						} satisfies AgentHints,
@@ -1517,14 +1070,7 @@ const TREE: SeedNode[] = [
 								key: "scalp_concern",
 								label: "Scalp Concern",
 								type: "multi-enum",
-								options: [
-									"dandruff",
-									"dryness",
-									"oiliness",
-									"hair-loss",
-									"sensitivity",
-									"buildup",
-								],
+								options: ["dandruff", "dryness", "oiliness", "hair-loss", "sensitivity", "buildup"],
 								filterable: true,
 								searchable: true,
 								required: true,
@@ -1551,23 +1097,12 @@ const TREE: SeedNode[] = [
 				id: "cat_mens_skincare",
 				name: "Men's Skincare",
 				slug: "mens-skincare",
-				description:
-					"Skincare and grooming products formulated to meet the needs of men's skin.",
+				description: "Skincare and grooming products formulated to meet the needs of men's skin.",
 				position: 5,
 				tags: ["men", "men's skincare", "grooming", "male"],
 				agentHints: {
-					synonyms: [
-						"men's grooming",
-						"skincare for men",
-						"male skincare",
-						"grooming routine",
-						"men's face care",
-					],
-					intents: [
-						"men's skincare routine",
-						"grooming products for men",
-						"skincare for men",
-					],
+					synonyms: ["men's grooming", "skincare for men", "male skincare", "grooming routine", "men's face care"],
+					intents: ["men's skincare routine", "grooming products for men", "skincare for men"],
 					complementaryCategories: ["cat_face_care", "cat_sun_care"],
 					targetAudience: ["men"],
 					typicalUseCases: ["daily grooming", "morning routine"],
@@ -1581,11 +1116,7 @@ const TREE: SeedNode[] = [
 						description:
 							"Lightweight and fast-absorbing moisturisers formulated for men's typically thicker, oilier skin.",
 						position: 1,
-						tags: [
-							"men's face cream",
-							"men's moisturiser",
-							"men's face lotion",
-						],
+						tags: ["men's face cream", "men's moisturiser", "men's face lotion"],
 						seoTitle: "Men's Face Moisturisers | Epoch Labs Skincare",
 						seoDescription:
 							"Fast-absorbing face moisturisers and creams formulated for men — daily, SPF, and post-shave.",
@@ -1597,17 +1128,8 @@ const TREE: SeedNode[] = [
 								"male face cream",
 								"men's face lotion",
 							],
-							intents: [
-								"men moisturise face",
-								"face cream for men",
-								"daily moisturiser men",
-								"post-shave moisturiser",
-							],
-							complementaryCategories: [
-								"cat_shaving_care",
-								"cat_moisturisers",
-								"cat_face_spf",
-							],
+							intents: ["men moisturise face", "face cream for men", "daily moisturiser men", "post-shave moisturiser"],
+							complementaryCategories: ["cat_shaving_care", "cat_moisturisers", "cat_face_spf"],
 							targetAudience: ["men"],
 							typicalUseCases: ["morning routine", "post-shave"],
 							agentConfidenceThreshold: 0.7,
@@ -1618,19 +1140,11 @@ const TREE: SeedNode[] = [
 						id: "cat_shaving_care",
 						name: "Shaving Care",
 						slug: "shaving-care",
-						description:
-							"Pre-shave, shaving, and post-shave products for a comfortable, irritation-free shave.",
+						description: "Pre-shave, shaving, and post-shave products for a comfortable, irritation-free shave.",
 						position: 2,
-						tags: [
-							"shaving",
-							"shave gel",
-							"aftershave",
-							"pre-shave",
-							"shaving cream",
-						],
+						tags: ["shaving", "shave gel", "aftershave", "pre-shave", "shaving cream"],
 						seoTitle: "Shaving Care | Epoch Labs Skincare",
-						seoDescription:
-							"Pre-shave oils, shaving gels, and aftershave balms for a smooth, irritation-free shave.",
+						seoDescription: "Pre-shave oils, shaving gels, and aftershave balms for a smooth, irritation-free shave.",
 						agentHints: {
 							synonyms: [
 								"shave gel",
@@ -1640,12 +1154,7 @@ const TREE: SeedNode[] = [
 								"razor burn relief",
 								"shaving foam",
 							],
-							intents: [
-								"shaving routine",
-								"prevent razor burn",
-								"aftershave",
-								"shaving cream",
-							],
+							intents: ["shaving routine", "prevent razor burn", "aftershave", "shaving cream"],
 							complementaryCategories: ["cat_mens_moisturisers"],
 							targetAudience: ["men"],
 							typicalUseCases: ["morning shave", "grooming routine"],
@@ -1682,48 +1191,19 @@ const TREE: SeedNode[] = [
 				id: "cat_lip_care",
 				name: "Lip Care",
 				slug: "lip-care",
-				description:
-					"Nourishing lip balms, masks, and treatments — skincare for the lips, no colour cosmetics.",
+				description: "Nourishing lip balms, masks, and treatments — skincare for the lips, no colour cosmetics.",
 				position: 6,
-				tags: [
-					"lip balm",
-					"lip care",
-					"lip treatment",
-					"lip mask",
-					"lip butter",
-				],
+				tags: ["lip balm", "lip care", "lip treatment", "lip mask", "lip butter"],
 				seoTitle: "Lip Care | Epoch Labs Skincare",
 				seoDescription:
 					"Hydrating lip balms, overnight lip masks, and nourishing lip treatments for soft, smooth lips.",
 				agentHints: {
-					synonyms: [
-						"lip balm",
-						"lip treatment",
-						"lip mask",
-						"lip butter",
-						"lip serum",
-						"chapped lips",
-					],
-					intents: [
-						"moisturise lips",
-						"treat chapped lips",
-						"lip hydration",
-						"lip overnight treatment",
-					],
+					synonyms: ["lip balm", "lip treatment", "lip mask", "lip butter", "lip serum", "chapped lips"],
+					intents: ["moisturise lips", "treat chapped lips", "lip hydration", "lip overnight treatment"],
 					complementaryCategories: ["cat_moisturisers", "cat_face_masks"],
-					excludeTerms: [
-						"lipstick",
-						"lip gloss",
-						"lip liner",
-						"lip colour",
-						"lip tint",
-					],
+					excludeTerms: ["lipstick", "lip gloss", "lip liner", "lip colour", "lip tint"],
 					targetAudience: ["all skin types", "dry lips"],
-					typicalUseCases: [
-						"daily protection",
-						"overnight treatment",
-						"travel kit",
-					],
+					typicalUseCases: ["daily protection", "overnight treatment", "travel kit"],
 					agentConfidenceThreshold: 0.8,
 				} satisfies AgentHints,
 				attributes: [
@@ -1746,28 +1226,15 @@ const TREE: SeedNode[] = [
 				id: "cat_gift_sets",
 				name: "Gift Sets",
 				slug: "gift-sets",
-				description:
-					"Curated skincare gift sets and routine bundles — perfect for gifting or trialling new products.",
+				description: "Curated skincare gift sets and routine bundles — perfect for gifting or trialling new products.",
 				position: 7,
 				tags: ["gift set", "skincare bundle", "gifting", "kit", "routine set"],
 				seoTitle: "Skincare Gift Sets | Epoch Labs Skincare",
 				seoDescription:
 					"Curated skincare gift sets for every budget and occasion — face, body, hair, and routine bundles.",
 				agentHints: {
-					synonyms: [
-						"skincare gift",
-						"beauty gift set",
-						"skincare bundle",
-						"gift box",
-						"skincare kit",
-						"routine set",
-					],
-					intents: [
-						"buy skincare gift",
-						"gift for someone",
-						"skincare bundle",
-						"starter kit",
-					],
+					synonyms: ["skincare gift", "beauty gift set", "skincare bundle", "gift box", "skincare kit", "routine set"],
+					intents: ["buy skincare gift", "gift for someone", "skincare bundle", "starter kit"],
 					complementaryCategories: [],
 					seasonality: ["december", "february", "may"],
 					typicalUseCases: ["gifting", "trying new brand", "travel kit"],
@@ -1797,13 +1264,7 @@ const TREE: SeedNode[] = [
 						key: "occasion",
 						label: "Occasion",
 						type: "multi-enum",
-						options: [
-							"birthday",
-							"christmas",
-							"valentines",
-							"mothers-day",
-							"everyday",
-						],
+						options: ["birthday", "christmas", "valentines", "mothers-day", "everyday"],
 						filterable: true,
 						searchable: true,
 						required: false,
@@ -1817,16 +1278,15 @@ const TREE: SeedNode[] = [
 
 export async function seedCategories(): Promise<void> {
 	const rows = flattenTree(TREE);
-
 	console.log(`Seeding ${rows.length} categories…`);
-
 	await db.insert(categories).values(rows).onConflictDoNothing();
-
-	console.log("Category seed complete successfully.");
 }
 
 seedCategories()
-	.then(() => process.exit(0))
+	.then(() => {
+		console.log("Category seed completed successfully.");
+		process.exit(0);
+	})
 	.catch((err: unknown) => {
 		console.error("Category seed failed:", err);
 		process.exit(1);
